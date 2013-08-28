@@ -1,0 +1,66 @@
+<Window title="Atacador automático Guerras Tribales" maximized="false"
+	xmlns:content="org.apache.pivot.wtk.content" xmlns="org.apache.pivot.wtk"
+	xmlns:bxml="http://pivot.apache.org/bxml">
+	<MenuBar
+		styles="{padding:{top:0, left:4, bottom:4, right:4},showWindowControls:false}">
+		<MenuBar.Item buttonData="Archivo">
+			<Menu>
+				<Menu.Section>
+					<Menu.Item action="Salir">
+						<buttonData>
+							<content:MenuItemData text="Salir"
+								keyboardShortcut="CTRL-S" />
+						</buttonData>
+					</Menu.Item>
+				</Menu.Section>
+			</Menu>
+		</MenuBar.Item>
+		<MenuBar.Item buttonData="Gestión">
+			<Menu>
+				<Menu.Section>
+					<Menu.Item action="nuevoJugador">
+						<buttonData>
+							<content:MenuItemData text="Nuevos Jugadores"
+								keyboardShortcut="CTRL-J" />
+						</buttonData>
+					</Menu.Item>
+					<Menu.Item action="nuevaLista">
+						<buttonData>
+							<content:MenuItemData text="Nuevos ataques"
+								keyboardShortcut="CTRL-A" />
+						</buttonData>
+					</Menu.Item>
+				</Menu.Section>
+			</Menu>
+		</MenuBar.Item>
+		<MenuBar.Item buttonData="Ayuda">
+			<Menu>
+				<Menu.Section>
+					<Menu.Item action="Opciones">
+						<buttonData>
+							<content:MenuItemData text="Opciones"
+								keyboardShortcut="CTRL-O" />
+						</buttonData>
+					</Menu.Item>
+					<Menu.Item action="RestablecerBBDD">
+						<buttonData>
+							<content:MenuItemData text="Restablecer BBDD"
+								keyboardShortcut="CTRL-B" />
+						</buttonData>
+					</Menu.Item>
+					<Menu.Item action="SobreAplicacion">
+						<buttonData>
+							<content:MenuItemData text="Sobre la aplicación"
+								keyboardShortcut="CTRL-H" />
+						</buttonData>
+					</Menu.Item>
+				</Menu.Section>
+			</Menu>
+		</MenuBar.Item>
+	</MenuBar>
+	<Border styles="{color:10}">
+		<TablePane
+			styles="{horizontalSpacing:1, verticalSpacing:1, showHorizontalGridLines:true, showVerticalGridLines:true, horizontalGridColor:10, verticalGridColor:10}">
+		</TablePane>
+	</Border>
+</Window>
