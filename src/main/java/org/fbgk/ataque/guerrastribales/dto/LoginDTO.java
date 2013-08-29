@@ -10,12 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.fbgk.ataque.bbdd.interfaz.SetearSerializable;
+
 /**
  * The Class LoginDTO.
  */
 @Entity
 @Table(name = "INF_Login")
-public class LoginDTO implements Serializable {
+public class LoginDTO implements Serializable, SetearSerializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long	serialVersionUID	= 9055957322138973209L;
@@ -24,7 +26,7 @@ public class LoginDTO implements Serializable {
 	@Id
 	@Column
 	@GeneratedValue
-	private int					id;
+	private Integer				loginID;
 
 	/** The usuario. */
 	@Column
@@ -36,7 +38,7 @@ public class LoginDTO implements Serializable {
 
 	/** The lista servidor dto. */
 	@ManyToMany
-	@Column
+	@Column(name = "servidorID")
 	private List<ServidorDTO>	listaServidorDTO;
 
 	/*
@@ -56,14 +58,18 @@ public class LoginDTO implements Serializable {
 			return false;
 		}
 		final LoginDTO other = (LoginDTO) obj;
-		if (this.id != other.id) {
-			return false;
-		}
 		if (this.listaServidorDTO == null) {
 			if (other.listaServidorDTO != null) {
 				return false;
 			}
 		} else if (!this.listaServidorDTO.equals(other.listaServidorDTO)) {
+			return false;
+		}
+		if (this.loginID == null) {
+			if (other.loginID != null) {
+				return false;
+			}
+		} else if (!this.loginID.equals(other.loginID)) {
 			return false;
 		}
 		if (this.password == null) {
@@ -84,16 +90,21 @@ public class LoginDTO implements Serializable {
 	}
 
 	/**
-	 * Gets the id.
+	 * Gets the lista servidor dto.
 	 * 
-	 * @return the id
+	 * @return the lista servidor dto
 	 */
-	public int getId() {
-		return this.id;
-	}
-
 	public List<ServidorDTO> getListaServidorDTO() {
 		return this.listaServidorDTO;
+	}
+
+	/**
+	 * Gets the login id.
+	 * 
+	 * @return the login id
+	 */
+	public Integer getLoginID() {
+		return this.loginID;
 	}
 
 	/**
@@ -123,25 +134,35 @@ public class LoginDTO implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + this.id;
 		result = prime * result + ((this.listaServidorDTO == null) ? 0 : this.listaServidorDTO.hashCode());
+		result = prime * result + ((this.loginID == null) ? 0 : this.loginID.hashCode());
 		result = prime * result + ((this.password == null) ? 0 : this.password.hashCode());
 		result = prime * result + ((this.usuario == null) ? 0 : this.usuario.hashCode());
 		return result;
 	}
 
-	/**
-	 * Sets the id.
-	 * 
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(final int id) {
-		this.id = id;
+	public void setId(final Integer id) {
+		this.loginID = id;
 	}
 
+	/**
+	 * Sets the lista servidor dto.
+	 * 
+	 * @param listaServidorDTO
+	 *            the new lista servidor dto
+	 */
 	public void setListaServidorDTO(final List<ServidorDTO> listaServidorDTO) {
 		this.listaServidorDTO = listaServidorDTO;
+	}
+
+	/**
+	 * Sets the login id.
+	 * 
+	 * @param loginID
+	 *            the new login id
+	 */
+	public void setLoginID(final Integer loginID) {
+		this.loginID = loginID;
 	}
 
 	/**
@@ -166,7 +187,7 @@ public class LoginDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.usuario;
+		return String.format("Usuario: %s", this.usuario);
 	}
 
 }

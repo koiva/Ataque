@@ -1,8 +1,8 @@
 <Window title="Atacador automático Guerras Tribales" maximized="false"
+	styles="{padding:{top:0, left:4, bottom:4, right:4}, showWindowControls:false}"
 	xmlns:content="org.apache.pivot.wtk.content" xmlns="org.apache.pivot.wtk"
 	xmlns:bxml="http://pivot.apache.org/bxml">
-	<MenuBar
-		styles="{padding:{top:0, left:4, bottom:4, right:4},showWindowControls:false}">
+	<MenuBar>
 		<MenuBar.Item buttonData="Archivo">
 			<Menu>
 				<Menu.Section>

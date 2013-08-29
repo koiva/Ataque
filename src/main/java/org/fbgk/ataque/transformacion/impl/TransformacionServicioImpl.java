@@ -101,7 +101,7 @@ public class TransformacionServicioImpl extends TransformacionServicioBase {
 		this.crearProcesoAutomatico(servidorDTO, this.insertarInfomacionMapeoJugadores, TransformacionConstante.URL_JUGADORES);
 		this.crearProcesoAutomatico(servidorDTO, this.insertarInfomacionMapeoPoblados, TransformacionConstante.URL_POBLADOS);
 		if (this.mapeoAlianza.size() != 0 && this.mapeoJugadores.size() != 0 && this.mapeoPueblos.size() != 0) {
-			this.procesarInformacionBBDD(servidorDTO.getId());
+			this.procesarInformacionBBDD(servidorDTO.getServidorID());
 			this.getAtaqueDao().actualizaTodo(this.mapeoAlianza.values());
 			this.getAtaqueDao().actualizaTodo(this.mapeoJugadores.values());
 			this.getAtaqueDao().actualizaTodo(this.mapeoPueblos.values());

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package org.fbgk.ataque.guerrastribales.dto;
 
 import java.io.Serializable;
@@ -11,14 +14,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.fbgk.ataque.bbdd.RecuperarGameID;
+import org.fbgk.ataque.bbdd.interfaz.RecuperarGameID;
+import org.fbgk.ataque.bbdd.interfaz.SetearSerializable;
 
 /**
  * The Class PueblosDTO.
  */
 @Entity
-@Table(name = "INF_Pueblos", uniqueConstraints = { @UniqueConstraint(columnNames = { "x", "y", "jugadorID" }) })
-public class PueblosDTO implements Serializable, RecuperarGameID {
+@Table(name = "INF_Pueblos", uniqueConstraints = { @UniqueConstraint(columnNames = { "x", "y", "jugadoresID" }) })
+public class PueblosDTO implements Serializable, RecuperarGameID, SetearSerializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long	serialVersionUID	= 1079034277929051557L;
@@ -27,11 +31,11 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	@Id
 	@GeneratedValue
 	@Column
-	private int					id;
+	private Integer				pueblosID;
 
 	/** The game id. */
 	@Column
-	private int					gameID;
+	private Integer				gameID;
 
 	/** The name. */
 	@Column
@@ -39,14 +43,14 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 
 	/** The x. */
 	@Column
-	private int					x;
+	private Integer				x;
 
 	/** The y. */
 	@Column
-	private int					y;
+	private Integer				y;
 
 	/** The player id. */
-	@JoinColumn(name = "jugadorID")
+	@JoinColumn(name = "jugadoresID")
 	@ManyToOne
 	private JugadoresDTO		jugadoresDTO;
 
@@ -57,11 +61,11 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 
 	/** The points. */
 	@Column
-	private int					points;
+	private Integer				points;
 
 	/** The rank. */
 	@Column
-	private int					rank;
+	private Integer				rank;
 
 	/*
 	 * (non-Javadoc)
@@ -80,10 +84,11 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 			return false;
 		}
 		final PueblosDTO other = (PueblosDTO) obj;
-		if (this.gameID != other.gameID) {
-			return false;
-		}
-		if (this.id != other.id) {
+		if (this.gameID == null) {
+			if (other.gameID != null) {
+				return false;
+			}
+		} else if (!this.gameID.equals(other.gameID)) {
 			return false;
 		}
 		if (this.jugadoresDTO == null) {
@@ -100,37 +105,58 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 		} else if (!this.name.equals(other.name)) {
 			return false;
 		}
-		if (this.points != other.points) {
+		if (this.points == null) {
+			if (other.points != null) {
+				return false;
+			}
+		} else if (!this.points.equals(other.points)) {
 			return false;
 		}
-		if (this.rank != other.rank) {
+		if (this.pueblosID == null) {
+			if (other.pueblosID != null) {
+				return false;
+			}
+		} else if (!this.pueblosID.equals(other.pueblosID)) {
 			return false;
 		}
-		if (this.x != other.x) {
+		if (this.rank == null) {
+			if (other.rank != null) {
+				return false;
+			}
+		} else if (!this.rank.equals(other.rank)) {
 			return false;
 		}
-		if (this.y != other.y) {
+		if (this.servidorDTO == null) {
+			if (other.servidorDTO != null) {
+				return false;
+			}
+		} else if (!this.servidorDTO.equals(other.servidorDTO)) {
+			return false;
+		}
+		if (this.x == null) {
+			if (other.x != null) {
+				return false;
+			}
+		} else if (!this.x.equals(other.x)) {
+			return false;
+		}
+		if (this.y == null) {
+			if (other.y != null) {
+				return false;
+			}
+		} else if (!this.y.equals(other.y)) {
 			return false;
 		}
 		return true;
 	}
 
-	/**
-	 * Gets the game id.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return the game id
+	 * @see org.fbgk.ataque.bbdd.RecuperarGameID#getGameID()
 	 */
-	public int getGameID() {
+	public Integer getGameID() {
 		return this.gameID;
-	}
-
-	/**
-	 * Gets the id.
-	 * 
-	 * @return the id
-	 */
-	public int getId() {
-		return this.id;
 	}
 
 	/**
@@ -156,8 +182,17 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	 * 
 	 * @return the points
 	 */
-	public int getPoints() {
+	public Integer getPoints() {
 		return this.points;
+	}
+
+	/**
+	 * Gets the pueblos id.
+	 * 
+	 * @return the pueblos id
+	 */
+	public Integer getPueblosID() {
+		return this.pueblosID;
 	}
 
 	/**
@@ -165,7 +200,7 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	 * 
 	 * @return the rank
 	 */
-	public int getRank() {
+	public Integer getRank() {
 		return this.rank;
 	}
 
@@ -183,7 +218,7 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	 * 
 	 * @return the x
 	 */
-	public int getX() {
+	public Integer getX() {
 		return this.x;
 	}
 
@@ -192,7 +227,7 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	 * 
 	 * @return the y
 	 */
-	public int getY() {
+	public Integer getY() {
 		return this.y;
 	}
 
@@ -205,14 +240,15 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + this.gameID;
-		result = prime * result + this.id;
+		result = prime * result + ((this.gameID == null) ? 0 : this.gameID.hashCode());
 		result = prime * result + ((this.jugadoresDTO == null) ? 0 : this.jugadoresDTO.hashCode());
 		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
-		result = prime * result + this.points;
-		result = prime * result + this.rank;
-		result = prime * result + this.x;
-		result = prime * result + this.y;
+		result = prime * result + ((this.points == null) ? 0 : this.points.hashCode());
+		result = prime * result + ((this.pueblosID == null) ? 0 : this.pueblosID.hashCode());
+		result = prime * result + ((this.rank == null) ? 0 : this.rank.hashCode());
+		result = prime * result + ((this.servidorDTO == null) ? 0 : this.servidorDTO.hashCode());
+		result = prime * result + ((this.x == null) ? 0 : this.x.hashCode());
+		result = prime * result + ((this.y == null) ? 0 : this.y.hashCode());
 		return result;
 	}
 
@@ -222,18 +258,12 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	 * @param gameID
 	 *            the new game id
 	 */
-	public void setGameID(final int gameID) {
+	public void setGameID(final Integer gameID) {
 		this.gameID = gameID;
 	}
 
-	/**
-	 * Sets the id.
-	 * 
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(final int id) {
-		this.id = id;
+	public void setId(final Integer id) {
+		this.pueblosID = id;
 	}
 
 	/**
@@ -262,8 +292,18 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	 * @param points
 	 *            the new points
 	 */
-	public void setPoints(final int points) {
+	public void setPoints(final Integer points) {
 		this.points = points;
+	}
+
+	/**
+	 * Sets the pueblos id.
+	 * 
+	 * @param pueblosID
+	 *            the new pueblos id
+	 */
+	public void setPueblosID(final Integer pueblosID) {
+		this.pueblosID = pueblosID;
 	}
 
 	/**
@@ -272,7 +312,7 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	 * @param rank
 	 *            the new rank
 	 */
-	public void setRank(final int rank) {
+	public void setRank(final Integer rank) {
 		this.rank = rank;
 	}
 
@@ -292,7 +332,7 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	 * @param x
 	 *            the new x
 	 */
-	public void setX(final int x) {
+	public void setX(final Integer x) {
 		this.x = x;
 	}
 
@@ -302,7 +342,7 @@ public class PueblosDTO implements Serializable, RecuperarGameID {
 	 * @param y
 	 *            the new y
 	 */
-	public void setY(final int y) {
+	public void setY(final Integer y) {
 		this.y = y;
 	}
 

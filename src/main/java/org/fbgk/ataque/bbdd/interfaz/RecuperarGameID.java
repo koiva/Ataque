@@ -1,4 +1,4 @@
-package org.fbgk.ataque.bbdd;
+package org.fbgk.ataque.bbdd.interfaz;
 
 import org.fbgk.ataque.guerrastribales.dto.ServidorDTO;
 
@@ -12,7 +12,7 @@ public interface RecuperarGameID {
 	 * 
 	 * @return the game id
 	 */
-	public int getGameID();
+	public Integer getGameID();
 
 	/**
 	 * Gets the servidor dto.

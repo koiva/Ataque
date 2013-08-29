@@ -1,11 +1,13 @@
 package org.fbgk.ataque.bbdd.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.fbgk.ataque.bbdd.AtaqueDao;
-import org.fbgk.ataque.bbdd.RecuperarGameID;
+import org.fbgk.ataque.bbdd.interfaz.RecuperarGameID;
+import org.fbgk.ataque.bbdd.interfaz.SetearSerializable;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +24,9 @@ public class AtaqueDaoImpl extends HibernateDaoSupport implements AtaqueDao {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.fbgk.ataque.bbdd.AtaqueDao#actualizar(java.util.List)
-	 */
-	@Transactional
-	public <T> void actualizar(final List<T> dto) {
-		for (final T nuevo : dto) {
-			this.actualizar(nuevo);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see org.fbgk.ataque.bbdd.AtaqueDao#actualizar(java.lang.Object)
 	 */
+
 	@Transactional
 	public <T> void actualizar(final T dto) {
 		this.getHibernateTemplate().saveOrUpdate(dto);
@@ -63,20 +54,83 @@ public class AtaqueDaoImpl extends HibernateDaoSupport implements AtaqueDao {
 	 * @see org.fbgk.ataque.bbdd.AtaqueDao#buscar(java.lang.Object)
 	 */
 	@Transactional(readOnly = true)
-	public <T, K> List<K> buscar(final T dto) {
-		// TODO Auto-generated method stub
-		return null;
+	@SuppressWarnings("unchecked")
+	public <K> List<K> buscar(final String string) {
+		return this.getHibernateTemplate().find(string);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.fbgk.ataque.bbdd.AtaqueDao#buscar(java.lang.String,
+	 * java.lang.Object[])
+	 */@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public <K> List<K> buscar(final String sql, final Object... constantes) {
+		return this.getHibernateTemplate().find(sql, constantes);
+	}
+
+	/**
+	 * Buscar objeto. Busca un objeto en una lista (solo si hay uno :P)
+	 * 
+	 * @param <K>
+	 *            the key type
+	 * @param listaObjetos
+	 *            the lista objetos
+	 * @return the k
+	 */
+	@Transactional(readOnly = true)
+	private <K> K buscarObjeto(final List<K> listaObjetos) {
+		K object = null;
+		if (listaObjetos.size() == 1) {
+			object = listaObjetos.get(0);
+		}
+		return object;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.fbgk.ataque.bbdd.AtaqueDao#consultar(java.lang.Object)
+	 */@Transactional(readOnly = true)
+	@SuppressWarnings({ "unchecked" })
+	public <K> K consultar(final String string) {
+		return (K) this.buscarObjeto(this.getHibernateTemplate().find(string));
+
+	}
+
+	/**
+	 * Consultar.
+	 * 
+	 * @param <K>
+	 *            the key type
+	 * @param SQL
+	 *            the sql
+	 * @param constantes
+	 *            the constantes
+	 * @return the k
 	 */
-	@Transactional(readOnly=true)
-	public <T, K> K consultar(final T dto) {
-		this.getHibernateTemplate().
-		return null;
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public <K> K consultar(final String SQL, final Object... constantes) {
+		return (K) this.buscarObjeto(this.getHibernateTemplate().find(SQL, constantes));
+	}
+
+	/**
+	 * Consultar.
+	 * 
+	 * @param <T>
+	 *            the generic type
+	 * @param dato
+	 *            the dato
+	 * @param id
+	 *            the id
+	 * @return the t
+	 */
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public <T> T consultar(final T dato, final Serializable id) {
+		return (T) this.getHibernateTemplate().get(dato.getClass(), id);
 	}
 
 	/*
@@ -115,7 +169,7 @@ public class AtaqueDaoImpl extends HibernateDaoSupport implements AtaqueDao {
 	 * @see org.fbgk.ataque.bbdd.AtaqueDao#insertar(java.util.List)
 	 */
 	@Transactional
-	public <T> List<T> insertar(final List<T> dto) {
+	public <T extends SetearSerializable> List<T> insertar(final List<T> dto) {
 		final List<T> respuesta = new ArrayList<T>();
 		for (final T nuevo : dto) {
 			respuesta.add(this.insertar(nuevo));
@@ -135,9 +189,10 @@ public class AtaqueDaoImpl extends HibernateDaoSupport implements AtaqueDao {
 	 * @see org.fbgk.ataque.bbdd.AtaqueDao#insertar(java.lang.Object)
 	 */
 	@Transactional
-	@SuppressWarnings("unchecked")
-	public <T> T insertar(final T dto) {
-		return (T) this.getHibernateTemplate().save(dto);
+	public <T extends SetearSerializable> T insertar(final T dto) {
+		final Serializable serializable = this.getHibernateTemplate().save(dto);
+		dto.setId((Integer) serializable);
+		return dto;
 	}
 
 	/**
@@ -153,8 +208,17 @@ public class AtaqueDaoImpl extends HibernateDaoSupport implements AtaqueDao {
 		final Query query = this.getSession().createQuery("FROM :table t WHERE t.gameID = :gameID AND t.servidorID = :servidorID");
 		query.setString("table", this.getSession().getEntityName(instance));
 		query.setInteger("gameID", instance.getGameID());
-		query.setInteger("servidorID", instance.getServidorDTO().getId());
+		query.setInteger("servidorID", instance.getServidorDTO().getServidorID());
 		return query;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.fbgk.ataque.bbdd.AtaqueDao#recuperarEntidad(java.lang.Class)
+	 */
+	public String recuperarEntidad(final Object object) {
+		return this.getSession().getEntityName(object);
 	}
 
 	/*
@@ -163,7 +227,7 @@ public class AtaqueDaoImpl extends HibernateDaoSupport implements AtaqueDao {
 	 * @see org.fbgk.ataque.bbdd.AtaqueDao#recuperarGameID(org.fbgk.ataque.bbdd.
 	 * RecuperarGameID)
 	 */
-	@Transactional(readOnly = true)
+
 	@SuppressWarnings("unchecked")
 	public <T extends RecuperarGameID> T recuperarGameID(final T dto) {
 		T t = null;
@@ -183,6 +247,7 @@ public class AtaqueDaoImpl extends HibernateDaoSupport implements AtaqueDao {
 	 * @see
 	 * org.fbgk.ataque.bbdd.AtaqueDao#recuperarTodaInformacion(java.lang.Object)
 	 */
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public <T extends RecuperarGameID> List<T> recuperarInformacionServer(final int identificador, final String name) {
 		return this.getHibernateTemplate().find(String.format("FROM %s WHERE servidorID = ?", name), identificador);
@@ -197,6 +262,7 @@ public class AtaqueDaoImpl extends HibernateDaoSupport implements AtaqueDao {
 	 *            the dto
 	 * @return the list
 	 */
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public <T> List<T> recuperarTodo(final T dto) {
 		return (List<T>) this.getHibernateTemplate().loadAll(dto.getClass());

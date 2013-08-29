@@ -8,10 +8,13 @@ import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Window;
 import org.fbgk.ataque.main.Marshaller;
+import org.fbgk.ataque.transformacion.TransformacionServicio;
 
 public class PantallaPrincipal extends Window implements Application {
 
-	private JugadoresServicio	jugadoresServicio;
+	private JugadoresServicio		jugadoresServicio;
+
+	private TransformacionServicio	transformacionServicio;
 
 	private void menusAyuda() {
 		Action.getNamedActions().put("nuevoJugador", new Action() {
@@ -33,6 +36,7 @@ public class PantallaPrincipal extends Window implements Application {
 		Action.getNamedActions().put("RestablecerBBDD", new Action() {
 			@Override
 			public void perform(final Component source) {
+				PantallaPrincipal.this.transformacionServicio.actualizarBBDD();
 			}
 		});
 		Action.getNamedActions().put("SobreAplicacion", new Action() {
@@ -62,6 +66,10 @@ public class PantallaPrincipal extends Window implements Application {
 		this.jugadoresServicio = jugadoresServicio;
 	}
 
+	public void setTransformacionServicio(final TransformacionServicio transformacionServicio) {
+		this.transformacionServicio = transformacionServicio;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -85,6 +93,7 @@ public class PantallaPrincipal extends Window implements Application {
 		final Window window = (Window) bxmlSerializer.readObject(this.getClass().getResource("/apache-pivot/view/AplicacionPrincipal.bxml"));
 		display.add(window);
 		this.jugadoresServicio = Marshaller.context.getBean(JugadoresServicio.class);
+		this.transformacionServicio = Marshaller.context.getBean(TransformacionServicio.class);
 		this.open(display);
 	}
 

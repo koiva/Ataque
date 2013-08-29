@@ -9,7 +9,7 @@
 						<ListButton bxml:id="listServidor" />
 					</BoxPane>
 					<BoxPane>
-						<TextInput bxml:id="idServidor" textKey="id" visible="false" />
+						<TextInput bxml:id="idServidor" textKey="servidorID" visible="false"/>
 						<TextInput bxml:id="servidor" textKey="server"
 							prompt="servidor Ejem: es20" />
 						<TextInput bxml:id="juego" textKey="juego" prompt="GuerrasTribales"
@@ -24,7 +24,6 @@
 						<ListButton bxml:id="listLogin" />
 					</BoxPane>
 					<BoxPane>
-						<TextInput bxml:id="idLogin" textKey="id" visible="false" />
 						<TextInput prompt="Usuario" textKey="usuario" bxml:id="usuario" />
 						<TextInput prompt="Contraseña" password="true" textKey="password"
 							bxml:id="password" />

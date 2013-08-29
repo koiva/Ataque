@@ -15,12 +15,12 @@ import org.apache.pivot.wtk.Form;
 import org.apache.pivot.wtk.Frame;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.ListButtonSelectionListener;
-import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.Window;
 import org.fbgk.ataque.guerrastribales.dto.LoginDTO;
 import org.fbgk.ataque.guerrastribales.dto.ServidorDTO;
+import org.fbgk.ataque.vistas.base.JugadoresServicioBase;
 
 /**
  * The Class JugadoresServicio.
@@ -32,11 +32,7 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 
 	/** The id juego. */
 	@BXML
-	protected TextInput		idJuego;
-
-	/** The id login. */
-	@BXML
-	protected TextInput		idLogin;
+	protected TextInput		idServidor;
 
 	/** The juego. */
 	@BXML
@@ -70,6 +66,57 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 	@BXML
 	protected Form			formulario;
 
+	/**
+	 * Actualizar login. Actualizamos la informacion del login.
+	 * 
+	 * @param servidorDTO
+	 *            the servidor dto
+	 * @return the login dto
+	 */
+	private LoginDTO actualizarLogin(final ServidorDTO servidorDTO) {
+		LoginDTO loginDTO = new LoginDTO();
+		loginDTO.setUsuario(this.usuario.getText());
+		loginDTO.setPassword(this.password.getText());
+		loginDTO.setListaServidorDTO(new ArrayList<ServidorDTO>());
+		loginDTO.getListaServidorDTO().add(servidorDTO);
+		final LoginDTO loginDTO2 = this.ataqueDao.consultar("FROM LoginDTO WHERE usuario=?", new Object[] { loginDTO.getUsuario() });
+		if (loginDTO2 == null) {
+			this.ataqueDao.insertar(loginDTO);
+		} else {
+			loginDTO.setListaServidorDTO(loginDTO2.getListaServidorDTO());
+			if (!loginDTO2.getListaServidorDTO().contains(servidorDTO)) {
+				loginDTO.getListaServidorDTO().add(servidorDTO);
+			}
+			this.ataqueDao.actualizar(loginDTO);
+		}
+		loginDTO = loginDTO2;
+		return loginDTO;
+	}
+
+	/**
+	 * Actualizar servidor. Actualizamos la informacion del servidor
+	 * 
+	 * @return the servidor dto
+	 */
+	private ServidorDTO actualizarServidor() {
+		ServidorDTO servidorDTO = new ServidorDTO();
+		servidorDTO.setInternalizacion(this.internalizacion.getText());
+		servidorDTO.setJuego(this.juego.getText());
+		servidorDTO.setServer(this.servidor.getText());
+		if (this.idServidor.getText().isEmpty()) {
+			final ServidorDTO servidorDTO2 = this.ataqueDao.consultar("FROM ServidorDTO WHERE server=? AND juego=? AND internalizacion=?", this.servidor.getText().trim(), this.juego.getText().trim(), this.internalizacion.getText().trim());
+			if (servidorDTO2 != null) {
+				servidorDTO = servidorDTO2;
+			} else {
+				servidorDTO = this.ataqueDao.insertar(servidorDTO);
+			}
+		} else {
+			servidorDTO.setId(Integer.valueOf(this.idServidor.getText()));
+			this.ataqueDao.actualizar(servidorDTO);
+		}
+		return servidorDTO;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -78,36 +125,13 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 	 * .wtk.Button)
 	 */
 	public void buttonPressed(final Button button) {
+		/** Comprobamos que los datos sean correctos */
 		if (this.servidor.getText().isEmpty() || this.juego.getText().isEmpty() || this.internalizacion.getText().isEmpty() || this.usuario.getText().isEmpty() || this.password.getText().isEmpty()) {
 			Alert.alert("Todos los datos son obligatorios", this);
 		} else {
-			ServidorDTO servidorDTO = new ServidorDTO();
-			servidorDTO.setServer(this.servidor.getText().trim());
-			servidorDTO.setJuego(this.juego.getText().trim());
-			servidorDTO.setInternalizacion(this.internalizacion.getText().trim());
-			final ServidorDTO servidorDTO2 = this.ataqueDao.consultar(servidorDTO);
-			if (servidorDTO2 != null) {
-				servidorDTO = servidorDTO2;
-			} else {
-				servidorDTO = this.ataqueDao.insertar(servidorDTO);
-			}
-			final LoginDTO loginDTO = new LoginDTO();
-			loginDTO.setUsuario(this.usuario.getText().trim());
-			final LoginDTO loginDTO2 = this.ataqueDao.consultar(loginDTO);
-			if (loginDTO2 == null) {
-				loginDTO.setPassword(this.password.getText());
-				loginDTO.setListaServidorDTO(new ArrayList<ServidorDTO>());
-				loginDTO.getListaServidorDTO().add(servidorDTO);
-				this.ataqueDao.insertar(loginDTO);
-			} else {
-				if (loginDTO.getListaServidorDTO().contains(servidorDTO)) {
-					Prompt.prompt("Este usuario ya esta introducido", this);
-				} else {
-					loginDTO.setPassword(this.password.getText());
-					loginDTO.getListaServidorDTO().add(servidorDTO);
-					this.ataqueDao.actualizar(loginDTO);
-				}
-			}
+			final ServidorDTO servidorDTO = this.actualizarServidor();
+			this.actualizarLogin(servidorDTO);
+			this.getOwner().close();
 		}
 	}
 
@@ -120,9 +144,11 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 	@Override
 	public void open(final Display display, final Window ownerArgument) {
 		super.open(display, ownerArgument);
+		// Creamos un BXMLSerializer para pasar el objeto de la vista.
 		final BXMLSerializer bxmlSerializer = new BXMLSerializer();
 		bxmlSerializer.getNamespace().put("application", this);
 		try {
+			// Insertamos la pantalla.
 			this.getDisplay().add((Frame) bxmlSerializer.readObject(this.getClass().getResource("/apache-pivot/view/AplicacionNuevoServidor.bxml")));
 		} catch (final IOException e) {
 			e.printStackTrace();
@@ -130,10 +156,12 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 			e.printStackTrace();
 		}
 		this.setName("Insertar o modificar los datos");
+		// Seteamos los datos de la anotacion BXML
 		bxmlSerializer.bind(this);
+
+		/** Transpasamos los datos de listas de servidores y logins */
 		final org.apache.pivot.collections.List<LoginDTO> listLogings = new org.apache.pivot.collections.ArrayList<LoginDTO>();
 		final org.apache.pivot.collections.List<ServidorDTO> listServidors = new org.apache.pivot.collections.ArrayList<ServidorDTO>();
-
 		for (final LoginDTO loginDTO : this.ataqueDao.recuperarTodo(new LoginDTO())) {
 			listLogings.add(loginDTO);
 		}
@@ -146,6 +174,7 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 		if (!listServidors.isEmpty()) {
 			this.listServidor.setListData(listServidors);
 		}
+		/** Seteamos los lanzadores */
 		this.listLogin.getListButtonSelectionListeners().add(this);
 		this.listServidor.getListButtonSelectionListeners().add(this);
 		this.submitButton.getButtonPressListeners().add(this);
@@ -193,17 +222,7 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 	 *            the new id juego
 	 */
 	public void setIdJuego(final TextInput idJuego) {
-		this.idJuego = idJuego;
-	}
-
-	/**
-	 * Sets the id login.
-	 * 
-	 * @param idLogin
-	 *            the new id login
-	 */
-	public void setIdLogin(final TextInput idLogin) {
-		this.idLogin = idLogin;
+		this.idServidor = idJuego;
 	}
 
 	/**

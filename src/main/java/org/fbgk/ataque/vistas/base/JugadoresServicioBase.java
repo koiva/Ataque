@@ -1,4 +1,4 @@
-package org.fbgk.ataque.vistas.impl;
+package org.fbgk.ataque.vistas.base;
 
 import org.apache.pivot.wtk.Window;
 import org.fbgk.ataque.bbdd.AtaqueDao;

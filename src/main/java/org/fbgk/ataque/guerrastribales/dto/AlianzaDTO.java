@@ -13,14 +13,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.fbgk.ataque.bbdd.RecuperarGameID;
+import org.fbgk.ataque.bbdd.interfaz.RecuperarGameID;
+import org.fbgk.ataque.bbdd.interfaz.SetearSerializable;
 
 /**
  * The Class AlianzaDTO.
  */
 @Entity
 @Table(name = "INF_Alianza", uniqueConstraints = { @UniqueConstraint(columnNames = { "gameID", "servidorID" }) })
-public class AlianzaDTO implements Serializable, RecuperarGameID {
+public class AlianzaDTO implements Serializable, RecuperarGameID, SetearSerializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long	serialVersionUID	= 1370038875165404880L;
@@ -29,11 +30,11 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	@Id
 	@GeneratedValue
 	@Column
-	private int					id;
+	private Integer				alianzaID;
 
 	/** The game id. */
 	@Column
-	private int					gameID;
+	private Integer				gameID;
 
 	/** The servidor dto. */
 	@ManyToOne
@@ -50,29 +51,34 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 
 	/** The miembros. */
 	@Column
-	private int					miembros;
+	private Integer				miembros;
 
 	/** The poblados. */
 	@Column
-	private int					poblados;
+	private Integer				poblados;
 
 	/** The puntos. */
 	@Column
-	private int					puntos;
+	private Integer				puntos;
 
 	/** The puntos totales. */
 	@Column
-	private int					puntosTotales;
+	private Integer				puntosTotales;
 
 	/** The rank. */
 	@Column
-	private int					rank;
+	private Integer				rank;
 
 	/** The lista jugadores dto. */
 	@OneToMany
-	@Column
+	@Column(name = "jugadoresID")
 	private List<JugadoresDTO>	listaJugadoresDTO;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -85,10 +91,18 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 			return false;
 		}
 		final AlianzaDTO other = (AlianzaDTO) obj;
-		if (this.gameID != other.gameID) {
+		if (this.alianzaID == null) {
+			if (other.alianzaID != null) {
+				return false;
+			}
+		} else if (!this.alianzaID.equals(other.alianzaID)) {
 			return false;
 		}
-		if (this.id != other.id) {
+		if (this.gameID == null) {
+			if (other.gameID != null) {
+				return false;
+			}
+		} else if (!this.gameID.equals(other.gameID)) {
 			return false;
 		}
 		if (this.listaJugadoresDTO == null) {
@@ -98,7 +112,11 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 		} else if (!this.listaJugadoresDTO.equals(other.listaJugadoresDTO)) {
 			return false;
 		}
-		if (this.miembros != other.miembros) {
+		if (this.miembros == null) {
+			if (other.miembros != null) {
+				return false;
+			}
+		} else if (!this.miembros.equals(other.miembros)) {
 			return false;
 		}
 		if (this.nombre == null) {
@@ -108,16 +126,32 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 		} else if (!this.nombre.equals(other.nombre)) {
 			return false;
 		}
-		if (this.poblados != other.poblados) {
+		if (this.poblados == null) {
+			if (other.poblados != null) {
+				return false;
+			}
+		} else if (!this.poblados.equals(other.poblados)) {
 			return false;
 		}
-		if (this.puntos != other.puntos) {
+		if (this.puntos == null) {
+			if (other.puntos != null) {
+				return false;
+			}
+		} else if (!this.puntos.equals(other.puntos)) {
 			return false;
 		}
-		if (this.puntosTotales != other.puntosTotales) {
+		if (this.puntosTotales == null) {
+			if (other.puntosTotales != null) {
+				return false;
+			}
+		} else if (!this.puntosTotales.equals(other.puntosTotales)) {
 			return false;
 		}
-		if (this.rank != other.rank) {
+		if (this.rank == null) {
+			if (other.rank != null) {
+				return false;
+			}
+		} else if (!this.rank.equals(other.rank)) {
 			return false;
 		}
 		if (this.servidorDTO == null) {
@@ -138,21 +172,21 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	}
 
 	/**
-	 * Gets the game id.
+	 * Gets the alianza id.
 	 * 
-	 * @return the game id
+	 * @return the alianza id
 	 */
-	public int getGameID() {
-		return this.gameID;
+	public Integer getAlianzaID() {
+		return this.alianzaID;
 	}
 
-	/**
-	 * Gets the id.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return the id
+	 * @see org.fbgk.ataque.bbdd.RecuperarGameID#getGameID()
 	 */
-	public int getId() {
-		return this.id;
+	public Integer getGameID() {
+		return this.gameID;
 	}
 
 	/**
@@ -169,7 +203,7 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * 
 	 * @return the miembros
 	 */
-	public int getMiembros() {
+	public Integer getMiembros() {
 		return this.miembros;
 	}
 
@@ -187,7 +221,7 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * 
 	 * @return the poblados
 	 */
-	public int getPoblados() {
+	public Integer getPoblados() {
 		return this.poblados;
 	}
 
@@ -196,7 +230,7 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * 
 	 * @return the puntos
 	 */
-	public int getPuntos() {
+	public Integer getPuntos() {
 		return this.puntos;
 	}
 
@@ -205,7 +239,7 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * 
 	 * @return the puntos totales
 	 */
-	public int getPuntosTotales() {
+	public Integer getPuntosTotales() {
 		return this.puntosTotales;
 	}
 
@@ -214,14 +248,14 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * 
 	 * @return the rank
 	 */
-	public int getRank() {
+	public Integer getRank() {
 		return this.rank;
 	}
 
-	/**
-	 * Gets the servidor dto.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return the servidor dto
+	 * @see org.fbgk.ataque.bbdd.RecuperarGameID#getServidorDTO()
 	 */
 	public ServidorDTO getServidorDTO() {
 		return this.servidorDTO;
@@ -236,22 +270,37 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 		return this.tag;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + this.gameID;
-		result = prime * result + this.id;
+		result = prime * result + ((this.alianzaID == null) ? 0 : this.alianzaID.hashCode());
+		result = prime * result + ((this.gameID == null) ? 0 : this.gameID.hashCode());
 		result = prime * result + ((this.listaJugadoresDTO == null) ? 0 : this.listaJugadoresDTO.hashCode());
-		result = prime * result + this.miembros;
+		result = prime * result + ((this.miembros == null) ? 0 : this.miembros.hashCode());
 		result = prime * result + ((this.nombre == null) ? 0 : this.nombre.hashCode());
-		result = prime * result + this.poblados;
-		result = prime * result + this.puntos;
-		result = prime * result + this.puntosTotales;
-		result = prime * result + this.rank;
+		result = prime * result + ((this.poblados == null) ? 0 : this.poblados.hashCode());
+		result = prime * result + ((this.puntos == null) ? 0 : this.puntos.hashCode());
+		result = prime * result + ((this.puntosTotales == null) ? 0 : this.puntosTotales.hashCode());
+		result = prime * result + ((this.rank == null) ? 0 : this.rank.hashCode());
 		result = prime * result + ((this.servidorDTO == null) ? 0 : this.servidorDTO.hashCode());
 		result = prime * result + ((this.tag == null) ? 0 : this.tag.hashCode());
 		return result;
+	}
+
+	/**
+	 * Sets the alianza id.
+	 * 
+	 * @param alianzaID
+	 *            the new alianza id
+	 */
+	public void setAlianzaID(final Integer alianzaID) {
+		this.alianzaID = alianzaID;
 	}
 
 	/**
@@ -260,18 +309,12 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * @param gameID
 	 *            the new game id
 	 */
-	public void setGameID(final int gameID) {
+	public void setGameID(final Integer gameID) {
 		this.gameID = gameID;
 	}
 
-	/**
-	 * Sets the id.
-	 * 
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(final int id) {
-		this.id = id;
+	public void setId(final Integer id) {
+		this.alianzaID = id;
 	}
 
 	/**
@@ -290,7 +333,7 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * @param miembros
 	 *            the new miembros
 	 */
-	public void setMiembros(final int miembros) {
+	public void setMiembros(final Integer miembros) {
 		this.miembros = miembros;
 	}
 
@@ -310,7 +353,7 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * @param poblados
 	 *            the new poblados
 	 */
-	public void setPoblados(final int poblados) {
+	public void setPoblados(final Integer poblados) {
 		this.poblados = poblados;
 	}
 
@@ -320,7 +363,7 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * @param puntos
 	 *            the new puntos
 	 */
-	public void setPuntos(final int puntos) {
+	public void setPuntos(final Integer puntos) {
 		this.puntos = puntos;
 	}
 
@@ -330,7 +373,7 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * @param puntosTotales
 	 *            the new puntos totales
 	 */
-	public void setPuntosTotales(final int puntosTotales) {
+	public void setPuntosTotales(final Integer puntosTotales) {
 		this.puntosTotales = puntosTotales;
 	}
 
@@ -340,7 +383,7 @@ public class AlianzaDTO implements Serializable, RecuperarGameID {
 	 * @param rank
 	 *            the new rank
 	 */
-	public void setRank(final int rank) {
+	public void setRank(final Integer rank) {
 		this.rank = rank;
 	}
 

@@ -7,7 +7,8 @@
 
 	<!-- BBDD -->
 	<context:property-placeholder location="/hybernate/datasource.properties" />
-
+	
+	<context:component-scan base-package="org.fbgk.ataque.bbdd.impl" />
 
 	<!-- Declare a datasource that has pooling capabilities -->
 	<bean id="dataSource"
@@ -59,9 +60,7 @@
 		<property name="ataqueDao" ref="ataqueDao" />
 	</bean>
 
-	<bean id="ataqueDao" class="org.fbgk.ataque.bbdd.impl.AtaqueDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
+	<bean id="ataqueDao" class="org.fbgk.ataque.bbdd.impl.AtaqueDaoImpl" />
 	
 	
 	<bean id="jugadoresServicio" class="org.fbgk.ataque.vistas.impl.JugadoresServicio" >

@@ -12,12 +12,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.fbgk.ataque.bbdd.interfaz.SetearSerializable;
+
 /**
  * The Class ServidorDTO.
  */
 @Entity
 @Table(name = "INF_Servidor", uniqueConstraints = { @UniqueConstraint(columnNames = { "juego", "server" }) })
-public class ServidorDTO implements Serializable {
+public class ServidorDTO implements Serializable, SetearSerializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long	serialVersionUID	= 1L;
@@ -26,7 +28,7 @@ public class ServidorDTO implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column
-	private int					id;
+	private Integer				servidorID;
 
 	/** The juego. */
 	@Column
@@ -52,7 +54,7 @@ public class ServidorDTO implements Serializable {
 
 	/** The lista jugadores dto. */
 	@OneToMany
-	@Column(name = "jugadorID")
+	@Column(name = "jugadoresID")
 	private List<JugadoresDTO>	listaJugadoresDTO;
 
 	/** The lista poblados dto. */
@@ -77,7 +79,11 @@ public class ServidorDTO implements Serializable {
 			return false;
 		}
 		final ServidorDTO other = (ServidorDTO) obj;
-		if (this.id != other.id) {
+		if (this.internalizacion == null) {
+			if (other.internalizacion != null) {
+				return false;
+			}
+		} else if (!this.internalizacion.equals(other.internalizacion)) {
 			return false;
 		}
 		if (this.juego == null) {
@@ -122,16 +128,14 @@ public class ServidorDTO implements Serializable {
 		} else if (!this.server.equals(other.server)) {
 			return false;
 		}
+		if (this.servidorID == null) {
+			if (other.servidorID != null) {
+				return false;
+			}
+		} else if (!this.servidorID.equals(other.servidorID)) {
+			return false;
+		}
 		return true;
-	}
-
-	/**
-	 * Gets the id.
-	 * 
-	 * @return the id
-	 */
-	public int getId() {
-		return this.id;
 	}
 
 	/**
@@ -150,7 +154,7 @@ public class ServidorDTO implements Serializable {
 	 */
 	public String getJuego() {
 		return this.juego;
-	};
+	}
 
 	/**
 	 * Gets the lista alianza dto.
@@ -197,6 +201,15 @@ public class ServidorDTO implements Serializable {
 		return this.server;
 	}
 
+	/**
+	 * Gets the servidor id.
+	 * 
+	 * @return the servidor id
+	 */
+	public Integer getServidorID() {
+		return this.servidorID;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -206,24 +219,19 @@ public class ServidorDTO implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + this.id;
+		result = prime * result + ((this.internalizacion == null) ? 0 : this.internalizacion.hashCode());
 		result = prime * result + ((this.juego == null) ? 0 : this.juego.hashCode());
 		result = prime * result + ((this.listaAlianzaDTO == null) ? 0 : this.listaAlianzaDTO.hashCode());
 		result = prime * result + ((this.listaJugadoresDTO == null) ? 0 : this.listaJugadoresDTO.hashCode());
 		result = prime * result + ((this.listaLoginDTO == null) ? 0 : this.listaLoginDTO.hashCode());
 		result = prime * result + ((this.listaPobladosDTO == null) ? 0 : this.listaPobladosDTO.hashCode());
 		result = prime * result + ((this.server == null) ? 0 : this.server.hashCode());
+		result = prime * result + ((this.servidorID == null) ? 0 : this.servidorID.hashCode());
 		return result;
 	}
 
-	/**
-	 * Sets the id.
-	 * 
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(final int id) {
-		this.id = id;
+	public void setId(final Integer id) {
+		this.servidorID = id;
 	}
 
 	/**
@@ -296,9 +304,19 @@ public class ServidorDTO implements Serializable {
 		this.server = server;
 	}
 
+	/**
+	 * Sets the servidor id.
+	 * 
+	 * @param servidorID
+	 *            the new servidor id
+	 */
+	public void setServidorID(final Integer servidorID) {
+		this.servidorID = servidorID;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("%s %s %s", this.juego, this.server, this.internalizacion);
+		return String.format("http://%s.%s.%s", this.server, this.juego, this.internalizacion);
 	}
 
 }
