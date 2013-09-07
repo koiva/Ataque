@@ -3,24 +3,33 @@ package org.fbgk.ataque.vistas.impl;
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.wtk.Action;
-import org.apache.pivot.wtk.Application;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Window;
+import org.fbgk.ataque.actions.URLActionsServicio;
 import org.fbgk.ataque.main.Marshaller;
 import org.fbgk.ataque.transformacion.TransformacionServicio;
+import org.fbgk.ataque.vistas.actions.ActivarRelojAction;
+import org.fbgk.ataque.vistas.base.PantallaPrincipalBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class PantallaPrincipal extends Window implements Application {
+/**
+ * The Class PantallaPrincipal.
+ */
+public class PantallaPrincipal extends PantallaPrincipalBase {
 
-	private JugadoresServicio		jugadoresServicio;
+	/** The logger. */
+	static Logger	logger	= LoggerFactory.getLogger(PantallaPrincipal.class);
 
-	private TransformacionServicio	transformacionServicio;
-
+	/**
+	 * Menus ayuda.
+	 */
 	private void menusAyuda() {
 		Action.getNamedActions().put("nuevoJugador", new Action() {
 			@Override
 			public void perform(final Component source) {
-				PantallaPrincipal.this.jugadoresServicio.open(PantallaPrincipal.this.getDisplay());
+				PantallaPrincipal.this.jugadoresServicio.open(PantallaPrincipal.this.getDisplay(), PantallaPrincipal.this);
 			}
 		});
 		Action.getNamedActions().put("nuevaLista", new Action() {
@@ -39,6 +48,9 @@ public class PantallaPrincipal extends Window implements Application {
 				PantallaPrincipal.this.transformacionServicio.actualizarBBDD();
 			}
 		});
+
+		Action.getNamedActions().put("activarReloj", Marshaller.context.getBean(ActivarRelojAction.class));
+
 		Action.getNamedActions().put("SobreAplicacion", new Action() {
 			@Override
 			public void perform(final Component source) {
@@ -48,35 +60,14 @@ public class PantallaPrincipal extends Window implements Application {
 		Action.getNamedActions().put("Salir", new Action() {
 			@Override
 			public void perform(final Component source) {
-
+				try {
+					logger.debug("Apagando aplicacion");
+					PantallaPrincipal.this.shutdown(Boolean.FALSE);
+				} catch (final Exception e) {
+					logger.error("La aplicacion no ha podido ser cerrada", e);
+				}
 			}
 		});
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.pivot.wtk.Application#resume()
-	 */
-	public void resume() throws Exception {
-
-	}
-
-	public void setJugadoresServicio(final JugadoresServicio jugadoresServicio) {
-		this.jugadoresServicio = jugadoresServicio;
-	}
-
-	public void setTransformacionServicio(final TransformacionServicio transformacionServicio) {
-		this.transformacionServicio = transformacionServicio;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.pivot.wtk.Application#shutdown(boolean)
-	 */
-	public boolean shutdown(final boolean arg0) throws Exception {
-		return false;
 	}
 
 	/*
@@ -94,16 +85,8 @@ public class PantallaPrincipal extends Window implements Application {
 		display.add(window);
 		this.jugadoresServicio = Marshaller.context.getBean(JugadoresServicio.class);
 		this.transformacionServicio = Marshaller.context.getBean(TransformacionServicio.class);
+		this.urlActionsServicio = Marshaller.context.getBean(URLActionsServicio.class);
 		this.open(display);
+		this.repaint();
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.pivot.wtk.Application#suspend()
-	 */
-	public void suspend() throws Exception {
-
-	}
-
 }

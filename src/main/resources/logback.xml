@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="archivo_fbgk" class="ch.qos.logback.core.FileAppender">
+		<file>log/fbgk.log</file>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="archivo_ORM" class="ch.qos.logback.core.FileAppender">
+		<file>log/orm.log</file>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="archivo_SpringFramework" class="ch.qos.logback.core.FileAppender">
+		<file>log/spring.log</file>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="trace">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+	<logger name="org.fbgk.ataque" level="trace">
+		<appender-ref ref="archivo_fbgk" />
+	</logger>
+
+	<logger name="org.hibernate" level="trace">
+		<appender-ref ref="archivo_ORM" />
+	</logger>
+	<logger name="org.hibernate" level="trace">
+		<appender-ref ref="archivo_SpringFramework" />
+	</logger>
+
+
+</configuration>

@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * The Class AtaqueDaoImpl.
  */
-@Repository("AtaqueDao")
+@Repository("ataqueDao")
 public class AtaqueDaoImpl extends HibernateDaoSupport implements AtaqueDao {
 
 	/*

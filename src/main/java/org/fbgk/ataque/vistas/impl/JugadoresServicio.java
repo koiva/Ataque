@@ -131,7 +131,6 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 		} else {
 			final ServidorDTO servidorDTO = this.actualizarServidor();
 			this.actualizarLogin(servidorDTO);
-			this.getOwner().close();
 		}
 	}
 
@@ -147,9 +146,9 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 		// Creamos un BXMLSerializer para pasar el objeto de la vista.
 		final BXMLSerializer bxmlSerializer = new BXMLSerializer();
 		bxmlSerializer.getNamespace().put("application", this);
+		Frame frame = null;
 		try {
-			// Insertamos la pantalla.
-			this.getDisplay().add((Frame) bxmlSerializer.readObject(this.getClass().getResource("/apache-pivot/view/AplicacionNuevoServidor.bxml")));
+			frame = (Frame) bxmlSerializer.readObject(JugadoresServicio.class, "/apache-pivot/view/AplicacionNuevoServidor.bxml");
 		} catch (final IOException e) {
 			e.printStackTrace();
 		} catch (final SerializationException e) {
@@ -158,7 +157,6 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 		this.setName("Insertar o modificar los datos");
 		// Seteamos los datos de la anotacion BXML
 		bxmlSerializer.bind(this);
-
 		/** Transpasamos los datos de listas de servidores y logins */
 		final org.apache.pivot.collections.List<LoginDTO> listLogings = new org.apache.pivot.collections.ArrayList<LoginDTO>();
 		final org.apache.pivot.collections.List<ServidorDTO> listServidors = new org.apache.pivot.collections.ArrayList<ServidorDTO>();
@@ -178,6 +176,11 @@ public class JugadoresServicio extends JugadoresServicioBase implements ButtonPr
 		this.listLogin.getListButtonSelectionListeners().add(this);
 		this.listServidor.getListButtonSelectionListeners().add(this);
 		this.submitButton.getButtonPressListeners().add(this);
+		frame.open(display, ownerArgument);
+	}
+
+	public void resume() throws Exception {
+
 	}
 
 	/*

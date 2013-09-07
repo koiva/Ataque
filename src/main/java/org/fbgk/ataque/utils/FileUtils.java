@@ -50,6 +50,7 @@ public class FileUtils {
 	 *            the target
 	 */
 	public static void copiarFichero(final File source, final File target) {
+		logger.debug("Copiando fichero desde un origen a un destino");
 		if (!target.exists() && source.exists()) {
 			try {
 				final FileInputStream fileInput = new FileInputStream(source);
@@ -114,6 +115,7 @@ public class FileUtils {
 	private static File devolucionArchivo(final TipoArchivo tipo, final String game, final String server, final String nameFile) {
 		final DateFormatter dateFormatter = new DateFormatter("yyyyMMdd");
 		final String directorio = String.format("%s/%s/%s/%s/", tipo.toString().toLowerCase(), game, server, dateFormatter.print(new Date(), Locale.ENGLISH));
+		logger.debug("Creando el directorio: {}", directorio);
 		final File respuesta = new File(directorio);
 		respuesta.mkdirs();
 		return new File(String.format("%s/%s", directorio, nameFile));
@@ -133,6 +135,7 @@ public class FileUtils {
 	 * @return the file
 	 */
 	public static File escribirArchivo(final InputStream inputStream, final String game, final String server, final String nameFile) {
+		logger.debug("Escribiendo el archivo de destino");
 		final File respuesta = devolucionArchivo(TipoArchivo.TEMPORAL, game, server, nameFile);
 		try {
 			if (respuesta.exists()) {
@@ -166,6 +169,7 @@ public class FileUtils {
 	 * @return the file
 	 */
 	public static List<String> leerArchivo(final String game, final String server, final String nameFile) {
+		logger.debug("Leyendo el archivo para procesarlo");
 		final List<String> respuesta = new ArrayList<String>();
 		final File archivoProcesado = devolucionArchivo(TipoArchivo.PROCESADO, game, server, nameFile);
 		if (!archivoProcesado.exists()) {

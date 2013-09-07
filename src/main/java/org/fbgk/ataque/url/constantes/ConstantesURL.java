@@ -23,6 +23,8 @@ public class ConstantesURL {
 	/** The Constant PETICION_ERROR_SERVIDOR. */
 	public static final int		PETICION_ERROR_SERVIDOR				= 500;
 
+	public static final int		PETICION_LOGIN_OK					= 302;
+
 	public static final String	DECODE_DEFAULT						= "UTF-8";
 
 }

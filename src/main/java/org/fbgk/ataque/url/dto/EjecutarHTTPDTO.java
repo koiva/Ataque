@@ -23,6 +23,48 @@ public class EjecutarHTTPDTO {
 	/** The servidor. */
 	private String				servidor;
 
+	/** The cookie. */
+	private Boolean				cookie			= Boolean.FALSE;
+
+	/**
+	 * Instantiates a new ejecutar httpdto.
+	 */
+	public EjecutarHTTPDTO() {
+	}
+
+	/**
+	 * Instantiates a new ejecutar httpdto.
+	 * 
+	 * @param url
+	 *            the url
+	 * @param parametros
+	 *            the parametros
+	 * @param indRespuesta
+	 *            the ind respuesta
+	 * @param game
+	 *            the game
+	 * @param servidor
+	 *            the servidor
+	 */
+	public EjecutarHTTPDTO(final String url, final Map<String, String> parametros, final boolean indRespuesta, final String game, final String servidor, final Boolean cookie) {
+		super();
+		this.url = url;
+		this.parametros = parametros;
+		this.indRespuesta = indRespuesta;
+		this.game = game;
+		this.servidor = servidor;
+		this.cookie = cookie;
+	}
+
+	/**
+	 * Gets the cookie.
+	 * 
+	 * @return the cookie
+	 */
+	public Boolean getCookie() {
+		return this.cookie;
+	}
+
 	/**
 	 * Gets the game.
 	 * 
@@ -66,6 +108,16 @@ public class EjecutarHTTPDTO {
 	 */
 	public boolean isIndRespuesta() {
 		return this.indRespuesta;
+	}
+
+	/**
+	 * Sets the cookie.
+	 * 
+	 * @param cookie
+	 *            the new cookie
+	 */
+	public void setCookie(final Boolean cookie) {
+		this.cookie = cookie;
 	}
 
 	/**

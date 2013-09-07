@@ -27,9 +27,7 @@
 						<TextInput prompt="Usuario" textKey="usuario" bxml:id="usuario" />
 						<TextInput prompt="Contraseña" password="true" textKey="password"
 							bxml:id="password" />
-
 					</BoxPane>
-
 					<BoxPane
 						styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
 						<PushButton bxml:id="submitButton" buttonData="Enviar"

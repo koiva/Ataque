@@ -26,4 +26,9 @@ public interface ClienteHTTPServicio {
 	 */
 	public RespuestaHTTPDTO ejecutarPost(EjecutarHTTPDTO ejecutarHTTPDTO);
 
+	/**
+	 * Inits the.
+	 */
+	public void init();
+
 }

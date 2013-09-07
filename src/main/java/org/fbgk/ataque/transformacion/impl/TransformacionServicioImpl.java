@@ -31,6 +31,7 @@ public class TransformacionServicioImpl extends TransformacionServicioBase {
 	 * Actualizar bbdd.
 	 */
 	public void actualizarBBDD() {
+		logger.debug("Se busca los datos de los Servidores actuales");
 		final List<ServidorDTO> servidorDTOs = this.getAtaqueDao().recuperarTodo(new ServidorDTO());
 		for (final ServidorDTO servidorDTO : servidorDTOs) {
 			this.procesarInformacion(servidorDTO);
@@ -118,6 +119,7 @@ public class TransformacionServicioImpl extends TransformacionServicioBase {
 	 *            the identificador
 	 */
 	private void procesarInformacionBBDD(final int identificador) {
+		logger.debug("Eliminando los datos innecesarios");
 		this.getAtaqueDao().eliminarTodoServidor(this.getAtaqueDao().recuperarInformacionServer(identificador, PueblosDTO.class.getName()));
 		this.getAtaqueDao().eliminarTodoServidor(this.getAtaqueDao().recuperarInformacionServer(identificador, JugadoresDTO.class.getName()));
 		this.getAtaqueDao().eliminarTodoServidor(this.getAtaqueDao().recuperarInformacionServer(identificador, AlianzaDTO.class.getName()));
@@ -133,6 +135,7 @@ public class TransformacionServicioImpl extends TransformacionServicioBase {
 	 * @return the list
 	 */
 	private List<String> sacarInformacionArchivo(final String tipo, final String servidor, final String internalizacion) {
+		logger.debug("Mapeando los datos necesarios");
 		final String descarga = String.format(tipo, servidor, internalizacion);
 		logger.info("Sacamos la informacion. Descarga: {}", descarga);
 		final RespuestaHTTPDTO respuestaHTTPDTO = this.conseguirArchivoInformacion(descarga, TransformacionConstante.JUEGO_GUERRASTRIBALES, servidor);

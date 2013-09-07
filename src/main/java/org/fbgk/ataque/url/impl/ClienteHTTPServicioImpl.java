@@ -6,12 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreProtocolPNames;
 import org.fbgk.ataque.url.base.ClienteHTTPServicioBase;
@@ -42,9 +47,13 @@ public class ClienteHTTPServicioImpl extends ClienteHTTPServicioBase {
 	private RespuestaHTTPDTO commonsLlamada(final HttpRequestBase request, final EjecutarHTTPDTO ejecutarHTTPDTO) {
 		request.addHeader(CoreProtocolPNames.USER_AGENT, ConstantesURL.USER_AGENT_MOZILLA);
 		final RespuestaHTTPDTO respuestaHTTPDTO = new RespuestaHTTPDTO();
-		HttpResponse response;
+		HttpResponse response = null;
 		try {
-			response = this.getHttpClient().execute(request);
+			if (ejecutarHTTPDTO.getCookie()) {
+				response = this.getHttpClient().execute(request, this.getHttpContext());
+			} else {
+				response = this.getHttpClient().execute(request);
+			}
 			logger.info("Enviando la informacion: {}", ejecutarHTTPDTO.getUrl());
 			logger.info("Codigo respuesta: {}", response.getStatusLine().getStatusCode());
 
@@ -70,6 +79,7 @@ public class ClienteHTTPServicioImpl extends ClienteHTTPServicioBase {
 	 * .dto.EjecutarHTTPDTO)
 	 */
 	public RespuestaHTTPDTO ejecutarGet(final EjecutarHTTPDTO ejecutarHTTPDTO) {
+		logger.debug("Ejecutando metodo de tipo GET");
 		return this.commonsLlamada(new HttpGet(ejecutarHTTPDTO.getUrl()), ejecutarHTTPDTO);
 	}
 
@@ -81,7 +91,7 @@ public class ClienteHTTPServicioImpl extends ClienteHTTPServicioBase {
 	 * url.dto.EjecutarHTTPDTO)
 	 */
 	public RespuestaHTTPDTO ejecutarPost(final EjecutarHTTPDTO ejecutarHTTPDTO) {
-
+		logger.debug("Ejecutando metodo de tipo POST");
 		final HttpPost post = new HttpPost(ejecutarHTTPDTO.getUrl());
 
 		if (!ejecutarHTTPDTO.getParametros().isEmpty()) {
@@ -101,4 +111,13 @@ public class ClienteHTTPServicioImpl extends ClienteHTTPServicioBase {
 		return this.commonsLlamada(post, ejecutarHTTPDTO);
 	}
 
+	public void init() {
+		logger.debug("Restableciendo la configuracion del cliente http");
+		this.getHttpContext().setAttribute(ClientContext.COOKIE_STORE, new BasicCookieStore());
+		this.getHttpClient().getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BEST_MATCH);
+		this.getHttpClient().getParams().setParameter(ClientPNames.CONN_MANAGER_TIMEOUT, Long.valueOf(360000000));
+		this.getHttpClient().getParams().setParameter(ClientPNames.HANDLE_REDIRECTS, Boolean.TRUE);
+		this.getHttpClient().getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+		this.getHttpClient().getParams().setParameter(ClientPNames.MAX_REDIRECTS, 50);
+	}
 }

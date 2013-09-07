@@ -1,12 +1,12 @@
-package org.fbgk.ataque.vistas.base;
+package org.fbgk.ataque.actions.base;
 
-import org.apache.pivot.wtk.Frame;
+import org.fbgk.ataque.actions.BarbarosServicio;
 import org.fbgk.ataque.bbdd.AtaqueDao;
 
 /**
- * The Class JugadoresServicioBase.
+ * The Class BarbarosServicioBase.
  */
-public abstract class JugadoresServicioBase extends Frame {
+public abstract class BarbarosServicioBase implements BarbarosServicio {
 
 	/** The ataque dao. */
 	protected AtaqueDao	ataqueDao;

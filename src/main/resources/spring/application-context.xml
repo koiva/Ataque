@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context
 			http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<!-- BBDD -->
 	<context:property-placeholder location="/hybernate/datasource.properties" />
-	
+
 	<context:component-scan base-package="org.fbgk.ataque.bbdd.impl" />
 
 	<!-- Declare a datasource that has pooling capabilities -->
 	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		p:driverClassName="${app.jdbc.driverClassName}" p:url="${app.jdbc.url}"
-		p:username="${app.jdbc.username}" p:password="${app.jdbc.password}" />
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${app.jdbc.driverClassName}" />
+		<property name="url" value="${app.jdbc.url}" />
+		<property name="username" value="${app.jdbc.username}" />
+		<property name="password" value="${app.jdbc.password}" />
+	</bean>
 
 	<!-- Declare a transaction manager -->
 	<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" 
 		p:sessionFactory-ref="sessionFactory" /> -->
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-		p:dataSource-ref="dataSource">
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">
@@ -39,7 +41,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
@@ -47,12 +49,32 @@
 
 
 	<!-- NEGOCIO -->
-	<bean id="clienteHTTPServicio" class="org.fbgk.ataque.url.impl.ClienteHTTPServicioImpl">
+	
+	<!-- Url -->
+	<bean id="clienteHTTPServicio" class="org.fbgk.ataque.url.impl.ClienteHTTPServicioImpl"
+		init-method="init">
 		<property name="httpClient">
-			<bean class="org.apache.http.impl.client.DefaultHttpClient" />
+			<bean class="org.apache.http.impl.client.DefaultHttpClient">
+				<constructor-arg>
+					<ref bean="poolClientManager" />
+				</constructor-arg>
+			</bean>
 		</property>
+		<property name="httpContext">
+			<bean class="org.apache.http.protocol.BasicHttpContext" />
+		</property>
+		<property name="cm" ref="poolClientManager" />
 	</bean>
 
+	<bean id="cookieStore" class="org.apache.http.impl.client.BasicCookieStore" />
+
+	<bean id="poolClientManager"
+		class="org.apache.http.impl.conn.PoolingClientConnectionManager">
+		<property name="maxTotal" value="100" />
+		<property name="defaultMaxPerRoute" value="32" />
+	</bean>
+
+	<!-- Transformaciones -->
 	<bean id="transformacionServicio"
 		class="org.fbgk.ataque.transformacion.impl.TransformacionServicioImpl"
 		depends-on="ataqueDao">
@@ -60,13 +82,35 @@
 		<property name="ataqueDao" ref="ataqueDao" />
 	</bean>
 
-	<bean id="ataqueDao" class="org.fbgk.ataque.bbdd.impl.AtaqueDaoImpl" />
-	
-	
-	<bean id="jugadoresServicio" class="org.fbgk.ataque.vistas.impl.JugadoresServicio" >
+	<!-- Vistas -->
+	<bean id="jugadoresServicio" class="org.fbgk.ataque.vistas.impl.JugadoresServicio">
 		<property name="ataqueDao" ref="ataqueDao" />
 	</bean>
+	
+	<!-- Acciones Vistas -->
+	<bean id="accionRelojAtaque" class="org.fbgk.ataque.vistas.actions.ActivarRelojAction">
+		<property name="atacadorAutomaticoServicio" ref="atacadorAutomaticoServicio" />
+	</bean>
+	
 
+	<!-- Actions -->
+	<bean id="urlActionsServicio" class="org.fbgk.ataque.actions.impl.URLActionsImpl">
+		<property name="ataqueDao" ref="ataqueDao" />
+		<property name="clienteHTTPServicio" ref="clienteHTTPServicio" />
+		<property name="mapeoGuerrasTribales" ref="mapeoGuerrasTribales" />
+	</bean>
+
+	<bean id="mapeoGuerrasTribales" class="org.fbgk.ataque.actions.impl.MapeoGuerrasTribalesImpl" />
+
+	<bean id="barbarosServicio" class="org.fbgk.ataque.actions.impl.BarbarosServicioImpl">
+		<property name="ataqueDao" ref="ataqueDao" />
+	</bean>
+	
+	<bean id="atacadorAutomaticoServicio" class="org.fbgk.ataque.actions.impl.AtacadorAutomaticoServicioImpl">
+		<property name="urlActionsServicio" ref="urlActionsServicio" />
+		<property name="ataqueDao" ref="ataqueDao" />
+	</bean>
+	
 
 
 </beans>

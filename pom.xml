@@ -11,7 +11,7 @@
 	<properties>
 		<org.springframework.base.version>3.2.3.RELEASE</org.springframework.base.version>
 		<org.apache.pivot>2.0.3</org.apache.pivot>
-		<sl4j-simple>1.4.2</sl4j-simple>
+		<sl4j-simple>1.7.5</sl4j-simple>
 		<hsqldb.connector.version>2.3.0</hsqldb.connector.version>
 		<hibernate.version>3.2.6.ga</hibernate.version>
 		<hibernate.annotations.version>3.4.0.GA</hibernate.annotations.version>
@@ -19,20 +19,24 @@
 		<javax.transaction.version>1.1</javax.transaction.version>
 		<apache.httpclient.version>4.2.5</apache.httpclient.version>
 		<apache.commons.io>2.4</apache.commons.io>
+		<apache.codec.version>1.8</apache.codec.version>
+		<jsoup.version>1.7.2</jsoup.version>
+		<version.qos>1.0.13</version.qos>
 	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
+				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<archive>
 						<manifest>
-							<addClasspath>true</addClasspath>
-							<mainClass></mainClass>
+							<mainClass>org.fbgk.ataque.main.Marshaller</mainClass>
 						</manifest>
 					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -130,15 +134,38 @@
 		<!-- SL4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
+			<artifactId>slf4j-api</artifactId>
 			<version>${sl4j-simple}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${version.qos}</version>
+		</dependency>
+		<dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${version.qos}</version>
+        </dependency>
 		<!-- -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>${apache.httpclient.version}</version>
+		</dependency>
+
+		<!-- Commons Codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${apache.codec.version}</version>
+		</dependency>
+
+		<!-- JSOUP. Libreria de lectura de HTML -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.version}</version>
 		</dependency>
 
 	</dependencies>

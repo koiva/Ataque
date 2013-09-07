@@ -1,66 +1,87 @@
-<Window title="Atacador automático Guerras Tribales" maximized="false"
-	styles="{padding:{top:0, left:4, bottom:4, right:4}, showWindowControls:false}"
+<Window title="Atacador automático Guerras Tribales" maximized="true"
 	xmlns:content="org.apache.pivot.wtk.content" xmlns="org.apache.pivot.wtk"
-	xmlns:bxml="http://pivot.apache.org/bxml">
-	<MenuBar>
-		<MenuBar.Item buttonData="Archivo">
-			<Menu>
-				<Menu.Section>
-					<Menu.Item action="Salir">
-						<buttonData>
-							<content:MenuItemData text="Salir"
-								keyboardShortcut="CTRL-S" />
-						</buttonData>
-					</Menu.Item>
-				</Menu.Section>
-			</Menu>
-		</MenuBar.Item>
-		<MenuBar.Item buttonData="Gestión">
-			<Menu>
-				<Menu.Section>
-					<Menu.Item action="nuevoJugador">
-						<buttonData>
-							<content:MenuItemData text="Nuevos Jugadores"
-								keyboardShortcut="CTRL-J" />
-						</buttonData>
-					</Menu.Item>
-					<Menu.Item action="nuevaLista">
-						<buttonData>
-							<content:MenuItemData text="Nuevos ataques"
-								keyboardShortcut="CTRL-A" />
-						</buttonData>
-					</Menu.Item>
-				</Menu.Section>
-			</Menu>
-		</MenuBar.Item>
-		<MenuBar.Item buttonData="Ayuda">
-			<Menu>
-				<Menu.Section>
-					<Menu.Item action="Opciones">
-						<buttonData>
-							<content:MenuItemData text="Opciones"
-								keyboardShortcut="CTRL-O" />
-						</buttonData>
-					</Menu.Item>
-					<Menu.Item action="RestablecerBBDD">
-						<buttonData>
-							<content:MenuItemData text="Restablecer BBDD"
-								keyboardShortcut="CTRL-B" />
-						</buttonData>
-					</Menu.Item>
-					<Menu.Item action="SobreAplicacion">
-						<buttonData>
-							<content:MenuItemData text="Sobre la aplicación"
-								keyboardShortcut="CTRL-H" />
-						</buttonData>
-					</Menu.Item>
-				</Menu.Section>
-			</Menu>
-		</MenuBar.Item>
-	</MenuBar>
-	<Border styles="{color:10}">
-		<TablePane
-			styles="{horizontalSpacing:1, verticalSpacing:1, showHorizontalGridLines:true, showVerticalGridLines:true, horizontalGridColor:10, verticalGridColor:10}">
-		</TablePane>
-	</Border>
+	xmlns:bxml="http://pivot.apache.org/bxml" icon="@images/holz.png">
+	<TablePane
+		styles="{horizontalSpacing:1, verticalSpacing:1, showHorizontalGridLines:true, showVerticalGridLines:true, horizontalGridColor:10, verticalGridColor:10}">
+		<columns>
+			<TablePane.Column width="1*" />
+		</columns>
+		<TablePane.Row height="-1">
+			<MenuBar>
+				<MenuBar.Item buttonData="Archivo">
+					<Menu>
+						<Menu.Section>
+							<Menu.Item action="Salir">
+								<buttonData>
+									<content:MenuItemData text="Salir" icon="@images/exit.png" 
+										keyboardShortcut="CTRL-S" />
+								</buttonData>
+							</Menu.Item>
+						</Menu.Section>
+					</Menu>
+				</MenuBar.Item>
+				<MenuBar.Item buttonData="Gestión">
+					<Menu>
+						<Menu.Section>
+							<Menu.Item action="nuevoJugador">
+								<buttonData>
+									<content:MenuItemData text="Nuevos Jugadores" icon="@images/add_player.png" 
+										keyboardShortcut="CTRL-J" />
+								</buttonData>
+							</Menu.Item>
+							<Menu.Item action="nuevaLista">
+								<buttonData>
+									<content:MenuItemData text="Nuevos ataques" icon="@images/attack.png"
+										keyboardShortcut="CTRL-A" />
+								</buttonData>
+							</Menu.Item>
+							<Menu.Item action="activarReloj">
+								<buttonData>
+									<content:MenuItemData text="Activar ataques automáticos" icon="@images/clock-icon.png"
+										keyboardShortcut="CTRL-P" />
+								</buttonData>
+							</Menu.Item>
+						</Menu.Section>
+					</Menu>
+				</MenuBar.Item>
+				<MenuBar.Item buttonData="Ayuda">
+					<Menu>
+						<Menu.Section>
+							<Menu.Item action="Opciones">
+								<buttonData>
+									<content:MenuItemData text="Opciones" icon="@images/options.png"
+										keyboardShortcut="CTRL-O" />
+								</buttonData>
+							</Menu.Item>
+							<Menu.Item action="RestablecerBBDD">
+								<buttonData>
+									<content:MenuItemData text="Restablecer BBDD" icon="@images/database.png"
+										keyboardShortcut="CTRL-B" />
+								</buttonData>
+							</Menu.Item>
+							<Menu.Item action="SobreAplicacion">
+								<buttonData>
+									<content:MenuItemData text="Sobre la aplicación" icon="@images/Information.png"
+										keyboardShortcut="CTRL-H" />
+								</buttonData>
+							</Menu.Item>
+						</Menu.Section>
+					</Menu>
+				</MenuBar.Item>
+			</MenuBar>
+		</TablePane.Row>
+		<TablePane.Row height="1*">
+			<TablePane>
+				<columns>
+					<TablePane.Column width="1*" />
+				</columns>
+				<TablePane.Row height="1*" >
+					<Border styles="{backgroundColor:null, padding:2}">
+
+					</Border>
+				</TablePane.Row>
+			</TablePane>
+		</TablePane.Row>
+	</TablePane>
+
 </Window>
