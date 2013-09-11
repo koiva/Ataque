@@ -49,7 +49,7 @@
 
 
 	<!-- NEGOCIO -->
-	
+
 	<!-- Url -->
 	<bean id="clienteHTTPServicio" class="org.fbgk.ataque.url.impl.ClienteHTTPServicioImpl"
 		init-method="init">
@@ -83,15 +83,23 @@
 	</bean>
 
 	<!-- Vistas -->
-	<bean id="jugadoresServicio" class="org.fbgk.ataque.vistas.impl.JugadoresServicio">
+	<bean id="jugadoresServicio" class="org.fbgk.ataque.vistas.impl.JugadoresServicioImpl">
 		<property name="ataqueDao" ref="ataqueDao" />
+		<property name="utilVistaServicio" ref="utilVistaServicio" />
+	</bean>
+
+	<bean id="servidorServicio" class="org.fbgk.ataque.vistas.impl.ServidorServicioImpl">
+		<property name="ataqueDao" ref="ataqueDao" />
+		<property name="utilVistaServicio" ref="utilVistaServicio" />
 	</bean>
 	
+	<bean id="utilVistaServicio" class="org.fbgk.ataque.vistas.impl.UtilVistaServicioImpl" />
+
 	<!-- Acciones Vistas -->
 	<bean id="accionRelojAtaque" class="org.fbgk.ataque.vistas.actions.ActivarRelojAction">
 		<property name="atacadorAutomaticoServicio" ref="atacadorAutomaticoServicio" />
 	</bean>
-	
+
 
 	<!-- Actions -->
 	<bean id="urlActionsServicio" class="org.fbgk.ataque.actions.impl.URLActionsImpl">
@@ -105,12 +113,13 @@
 	<bean id="barbarosServicio" class="org.fbgk.ataque.actions.impl.BarbarosServicioImpl">
 		<property name="ataqueDao" ref="ataqueDao" />
 	</bean>
-	
-	<bean id="atacadorAutomaticoServicio" class="org.fbgk.ataque.actions.impl.AtacadorAutomaticoServicioImpl">
+
+	<bean id="atacadorAutomaticoServicio"
+		class="org.fbgk.ataque.actions.impl.AtacadorAutomaticoServicioImpl">
 		<property name="urlActionsServicio" ref="urlActionsServicio" />
 		<property name="ataqueDao" ref="ataqueDao" />
 	</bean>
-	
+
 
 
 </beans>

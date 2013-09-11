@@ -4,7 +4,9 @@ import org.apache.pivot.wtk.Application;
 import org.apache.pivot.wtk.Window;
 import org.fbgk.ataque.actions.URLActionsServicio;
 import org.fbgk.ataque.transformacion.TransformacionServicio;
-import org.fbgk.ataque.vistas.impl.JugadoresServicio;
+import org.fbgk.ataque.vistas.JugadoresServicio;
+import org.fbgk.ataque.vistas.ServidorServicio;
+import org.fbgk.ataque.vistas.impl.JugadoresServicioImpl;
 
 /**
  * The Class PantallaPrincipalBase.
@@ -19,6 +21,11 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 
 	/** The url actions servicio. */
 	protected URLActionsServicio		urlActionsServicio;
+
+	/** The servidor servicio. */
+	protected ServidorServicio			servidorServicio;
+
+	protected Window					window;
 
 	/*
 	 * (non-Javadoc)
@@ -35,8 +42,18 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	 * @param jugadoresServicio
 	 *            the new jugadores servicio
 	 */
-	public void setJugadoresServicio(final JugadoresServicio jugadoresServicio) {
+	public void setJugadoresServicio(final JugadoresServicioImpl jugadoresServicio) {
 		this.jugadoresServicio = jugadoresServicio;
+	}
+
+	/**
+	 * Sets the servidor servicio.
+	 * 
+	 * @param servidorServicio
+	 *            the new servidor servicio
+	 */
+	public void setServidorServicio(final ServidorServicio servidorServicio) {
+		this.servidorServicio = servidorServicio;
 	}
 
 	/**
@@ -65,6 +82,7 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	 * @see org.apache.pivot.wtk.Application#shutdown(boolean)
 	 */
 	public boolean shutdown(final boolean arg0) throws Exception {
+		this.window.close();
 		return false;
 	}
 

@@ -1,0 +1,55 @@
+<Frame title="Gestion de servidores" maximized="false" xmlns:bxml="http://pivot.apache.org/bxml" bxml:id="frameUser" xmlns="org.apache.pivot.wtk">
+	<TablePane>
+		<columns>
+			<TablePane.Column width="1*" />
+		</columns>
+		<TablePane.Row height="1*">
+			<Border styles="{padding:6}">
+				<ScrollPane horizontalScrollBarPolicy="fill">
+					<TableView bxml:id="gestionTabla">
+						<columns>
+							<TableView.Column name="loginID" width="1*" headerData="ID" />
+							<TableView.Column name="usuario" width="1*" headerData="Jugador" />
+							<TableView.Column name="listaServidorDTO" width="3*" headerData="Servidores" />
+						</columns>
+					</TableView>
+					<columnHeader>
+						<TableViewHeader tableView="$gestionTabla" sortMode="single_column" />
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+		</TablePane.Row>
+		<TablePane.Row height="1*">
+			<Border styles="{padding:6}">
+				<Form bxml:id="formulario">
+					<Form.Section heading="Actualización usuario">
+						<TextInput bxml:id="loginID" textKey="loginID" visible="false" />
+						<BoxPane Form.label="Nombre usuario">
+							<TextInput bxml:id="usuario" textKey="usuario" prompt="Servidor Ejem: es20" />
+						</BoxPane>
+						<BoxPane Form.label="Clave">
+							<TextInput bxml:id="password" textKey="password" password="true" />
+						</BoxPane>
+						<BoxPane Form.label="Servidores">
+							<Border styles="{padding:6}">
+								<ScrollPane horizontalScrollBarPolicy="fill" verticalScrollBarPolicy="fill_to_capacity">
+									<ListView bxml:id="servidoresView" selectMode="multi" />
+								</ScrollPane>
+							</Border>
+						</BoxPane>
+					</Form.Section>
+				</Form>
+			</Border>
+		</TablePane.Row>
+		<TablePane.Row height="-1">
+			<Border styles="{padding:6}">
+				<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
+					<PushButton bxml:id="buttonNuevo" buttonData="Nuevo" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonAceptar" buttonData="Aceptar" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonEliminar" buttonData="Eliminar" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonSalir" buttonData="Salir" styles="{minimumAspectRatio:3}" />
+				</BoxPane>
+			</Border>
+		</TablePane.Row>
+	</TablePane>
+</Frame>

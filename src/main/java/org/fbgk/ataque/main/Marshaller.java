@@ -1,12 +1,8 @@
 package org.fbgk.ataque.main;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.apache.pivot.wtk.DesktopApplicationContext;
-import org.fbgk.ataque.actions.URLActionsServicio;
-import org.fbgk.ataque.actions.impl.URLActionsImpl;
 import org.fbgk.ataque.vistas.impl.PantallaPrincipal;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,11 +14,6 @@ public class Marshaller {
 
 	/** The context. */
 	public static ApplicationContext	context;
-
-	private static void atacar() {
-		final URLActionsServicio urlActions = context.getBean(URLActionsImpl.class);
-		urlActions.atacarListaBarbaroTodo(1, 2);
-	}
 
 	/**
 	 * The main method.
@@ -53,14 +44,4 @@ public class Marshaller {
 
 	}
 
-	private static void timerStack() {
-
-		final Timer timer = new Timer("Atacando", true);
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				atacar();
-			}
-		}, 0, 300000);
-	}
 }

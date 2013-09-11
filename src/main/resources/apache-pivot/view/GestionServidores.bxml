@@ -1,0 +1,52 @@
+<Frame title="Gestion de servidores" maximized="false" xmlns:bxml="http://pivot.apache.org/bxml" bxml:id="frameServer" xmlns="org.apache.pivot.wtk">
+	<TablePane>
+		<columns>
+			<TablePane.Column width="1*" />
+		</columns>
+		<TablePane.Row height="1*">
+			<Border styles="{padding:6}">
+				<ScrollPane horizontalScrollBarPolicy="fill">
+					<TableView bxml:id="gestionTabla">
+						<columns>
+							<TableView.Column name="servidorID" width="1*" headerData="ID" />
+							<TableView.Column name="server" width="1*" headerData="Servidor" />
+							<TableView.Column name="juego" width="3*" headerData="Juego" />
+							<TableView.Column name="internalizacion" width="2*" headerData="Localizacion WEB" />
+						</columns>
+					</TableView>
+					<columnHeader>
+						<TableViewHeader tableView="$gestionTabla" sortMode="single_column" />
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+		</TablePane.Row>
+		<TablePane.Row height="1*">
+			<Border styles="{padding:6}">
+				<Form bxml:id="formulario">
+					<Form.Section heading="Servidor">
+						<TextInput bxml:id="idServidor" textKey="servidorID" visible="false"  />
+						<BoxPane Form.label="Nombre servidor">
+							<TextInput bxml:id="servidor" textKey="server" prompt="Servidor Ejem: es20" />
+						</BoxPane>
+						<BoxPane Form.label="Nombre juego">
+							<TextInput bxml:id="juego" textKey="juego" prompt="GuerrasTribales" />
+						</BoxPane>
+						<BoxPane Form.label="Finalización URL">
+							<TextInput bxml:id="internalizacion" textKey="internalizacion" prompt="Internalizacion Ejem: es" />
+						</BoxPane>
+					</Form.Section>
+				</Form>
+			</Border>
+		</TablePane.Row>
+		<TablePane.Row height="-1">
+			<Border styles="{padding:6}">
+				<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
+					<PushButton bxml:id="buttonNuevo" buttonData="Nuevo" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonAceptar" buttonData="Aceptar" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonEliminar" buttonData="Eliminar" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonSalir" buttonData="Salir" styles="{minimumAspectRatio:3}" />
+				</BoxPane>
+			</Border>
+		</TablePane.Row>
+	</TablePane>
+</Frame>

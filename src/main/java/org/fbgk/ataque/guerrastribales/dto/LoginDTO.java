@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -37,7 +38,7 @@ public class LoginDTO implements Serializable, SetearSerializable {
 	private String				password;
 
 	/** The lista servidor dto. */
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@Column(name = "servidorID")
 	private List<ServidorDTO>	listaServidorDTO;
 
