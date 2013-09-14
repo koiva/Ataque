@@ -15,6 +15,10 @@ local.properties
 .classpath
 .settings/
 .loadpath
+target/
+bbdd/
+temporal/
+procesador/
 
 # External tool builders
 .externalToolBuilders/
