@@ -25,7 +25,7 @@
 					<Form.Section heading="Actualización usuario">
 						<TextInput bxml:id="loginID" textKey="loginID" visible="false" />
 						<BoxPane Form.label="Nombre usuario">
-							<TextInput bxml:id="usuario" textKey="usuario" prompt="Servidor Ejem: es20" />
+							<TextInput bxml:id="usuario" textKey="usuario" />
 						</BoxPane>
 						<BoxPane Form.label="Clave">
 							<TextInput bxml:id="password" textKey="password" password="true" />

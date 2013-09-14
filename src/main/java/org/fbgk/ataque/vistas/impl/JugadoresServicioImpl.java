@@ -7,6 +7,7 @@ import org.apache.pivot.beans.BeanAdapter;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.Vote;
+import org.apache.pivot.wtk.Alert;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Display;
@@ -100,14 +101,14 @@ public class JugadoresServicioImpl extends JugadoresServicioBase implements Tabl
 		logger.debug("Boton presionado");
 		if (button.equals(this.buttonAceptar)) {
 			final LoginDTO loginDTO = new LoginDTO();
+			loginDTO.setListaServidorDTO(new java.util.ArrayList<ServidorDTO>());
+			final Sequence<ServidorDTO> sequence = (Sequence<ServidorDTO>) this.servidoresView.getSelectedItems();
+			for (int x = 0; x < sequence.getLength(); x++) {
+				loginDTO.getListaServidorDTO().add(sequence.get(x));
+			}
 			if (TipoAccion.INSERTAR.equals(this.estado)) {
 				loginDTO.setUsuario(this.usuario.getText());
 				loginDTO.setPassword(this.password.getText());
-				loginDTO.setListaServidorDTO(new java.util.ArrayList<ServidorDTO>());
-				final Sequence<ServidorDTO> sequence = (Sequence<ServidorDTO>) this.servidoresView.getSelectedItems();
-				for (int x = 0; x < sequence.getLength(); x++) {
-					loginDTO.getListaServidorDTO().add(sequence.get(x));
-				}
 				logger.debug("Insertando nuevo jugador");
 				this.ataqueDao.insertar(loginDTO);
 			} else if (TipoAccion.MODIFICAR.equals(this.estado)) {
@@ -203,20 +204,24 @@ public class JugadoresServicioImpl extends JugadoresServicioBase implements Tabl
 	 * , org.apache.pivot.wtk.Window)
 	 */
 	public void open(final Display display, final Window window) {
-		this.frameUser = this.utilVistaServicio.openFrame(this.frameUser, display, window, this, ConstantesPantallas.PANTALLA_GESTION_JUGADORES);
-		if (this.frameUser != null) {
-			this.gestionTabla.getTableViewSelectionListeners().add(this);
-			this.cargarDatosLogin();
-			this.buttonAceptar.getButtonPressListeners().add(this);
-			this.buttonEliminar.getButtonPressListeners().add(this);
-			this.buttonSalir.getButtonPressListeners().add(this);
-			this.buttonNuevo.getButtonPressListeners().add(this);
-			final Sequence<String> sequence = new ArrayList<String>();
-			sequence.add("Aceptar");
-			sequence.add("Cancelar");
-			this.promptEliminacion = new Prompt(MessageType.WARNING, "¿Estás seguro de querer eliminar el servidor?", sequence);
-			this.promptEliminacion.getWindowStateListeners().add(this);
-			this.servidoresView.setListData(this.utilVistaServicio.recuperarLista(this.ataqueDao.recuperarTodo(new ServidorDTO())));
+		if (!this.ataqueDao.recuperarTodo(new ServidorDTO()).isEmpty()) {
+			this.frameUser = this.utilVistaServicio.openFrame(this.frameUser, display, window, this, ConstantesPantallas.PANTALLA_GESTION_JUGADORES);
+			if (this.frameUser != null) {
+				this.gestionTabla.getTableViewSelectionListeners().add(this);
+				this.cargarDatosLogin();
+				this.buttonAceptar.getButtonPressListeners().add(this);
+				this.buttonEliminar.getButtonPressListeners().add(this);
+				this.buttonSalir.getButtonPressListeners().add(this);
+				this.buttonNuevo.getButtonPressListeners().add(this);
+				final Sequence<String> sequence = new ArrayList<String>();
+				sequence.add("Aceptar");
+				sequence.add("Cancelar");
+				this.promptEliminacion = new Prompt(MessageType.WARNING, "¿Estás seguro de querer eliminar el servidor?", sequence);
+				this.promptEliminacion.getWindowStateListeners().add(this);
+				this.servidoresView.setListData(this.utilVistaServicio.recuperarLista(this.ataqueDao.recuperarTodo(new ServidorDTO())));
+			}
+		} else {
+			Alert.alert("No se puede abrir la ventana si no hay servidores dados de alta", window);
 		}
 	}
 

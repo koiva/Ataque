@@ -4,6 +4,7 @@ import org.apache.pivot.wtk.Application;
 import org.apache.pivot.wtk.Window;
 import org.fbgk.ataque.actions.URLActionsServicio;
 import org.fbgk.ataque.transformacion.TransformacionServicio;
+import org.fbgk.ataque.vistas.GestionAtaquesServicio;
 import org.fbgk.ataque.vistas.JugadoresServicio;
 import org.fbgk.ataque.vistas.ServidorServicio;
 import org.fbgk.ataque.vistas.impl.JugadoresServicioImpl;
@@ -25,6 +26,10 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	/** The servidor servicio. */
 	protected ServidorServicio			servidorServicio;
 
+	/** The gestion ataques servicio. */
+	protected GestionAtaquesServicio	gestionAtaquesServicio;
+
+	/** The window. */
 	protected Window					window;
 
 	/*
@@ -34,6 +39,26 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	 */
 	public void resume() throws Exception {
 
+	}
+
+	/**
+	 * Sets the gestion ataques servicio.
+	 * 
+	 * @param gestionAtaquesServicio
+	 *            the new gestion ataques servicio
+	 */
+	public void setGestionAtaquesServicio(final GestionAtaquesServicio gestionAtaquesServicio) {
+		this.gestionAtaquesServicio = gestionAtaquesServicio;
+	}
+
+	/**
+	 * Sets the jugadores servicio.
+	 * 
+	 * @param jugadoresServicio
+	 *            the new jugadores servicio
+	 */
+	public void setJugadoresServicio(final JugadoresServicio jugadoresServicio) {
+		this.jugadoresServicio = jugadoresServicio;
 	}
 
 	/**

@@ -11,6 +11,7 @@ import org.apache.pivot.wtk.Window;
 import org.fbgk.ataque.actions.URLActionsServicio;
 import org.fbgk.ataque.main.Marshaller;
 import org.fbgk.ataque.transformacion.TransformacionServicio;
+import org.fbgk.ataque.vistas.GestionAtaquesServicio;
 import org.fbgk.ataque.vistas.ServidorServicio;
 import org.fbgk.ataque.vistas.actions.ActivarRelojAction;
 import org.fbgk.ataque.vistas.base.PantallaPrincipalBase;
@@ -47,6 +48,7 @@ public class PantallaPrincipal extends PantallaPrincipalBase {
 		Action.getNamedActions().put("gestionLista", new Action() {
 			@Override
 			public void perform(final Component source) {
+				PantallaPrincipal.this.gestionAtaquesServicio.open(PantallaPrincipal.this.flowPane.getDisplay(), PantallaPrincipal.this.flowPane.getWindow());
 			}
 		});
 		Action.getNamedActions().put("Opciones", new Action() {
@@ -80,6 +82,12 @@ public class PantallaPrincipal extends PantallaPrincipalBase {
 				}
 			}
 		});
+		Action.getNamedActions().put("mirarAtaques", new Action() {
+			@Override
+			public void perform(final Component source) {
+
+			}
+		});
 	}
 
 	/*
@@ -100,6 +108,7 @@ public class PantallaPrincipal extends PantallaPrincipalBase {
 		this.transformacionServicio = Marshaller.context.getBean(TransformacionServicio.class);
 		this.urlActionsServicio = Marshaller.context.getBean(URLActionsServicio.class);
 		this.servidorServicio = Marshaller.context.getBean(ServidorServicio.class);
+		this.gestionAtaquesServicio = Marshaller.context.getBean(GestionAtaquesServicio.class);
 		this.open(display);
 	}
 }

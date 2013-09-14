@@ -1,7 +1,6 @@
 package org.fbgk.ataque.actions.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.fbgk.ataque.actions.base.BarbarosServicioBase;
@@ -59,28 +58,14 @@ public class BarbarosServicioImpl extends BarbarosServicioBase {
 		logger.debug("Mantenimiento de los barbaros invocado");
 		final List<AtaqueDTO> listaAtaques = this.buscarBarbaros(pueblosDTO, distMax);
 		final ListaAtaquesDTO dto = this.ataqueDao.consultar(new ListaAtaquesDTO(), listaAtaquesDTO.getListaAtaquesID());
-		final Iterator<AtaqueDTO> iteratorNuevo = listaAtaques.iterator();
 		logger.debug("Se esta procesando el numero de bárbaros segun la distancia máxima y si ha sido conquistado");
-		while (iteratorNuevo.hasNext() && !dto.getListaAtaquesDTO().isEmpty()) {
-			final Integer gameID = iteratorNuevo.next().getGameIDAtaque();
-			final Iterator<AtaqueDTO> iteratorViejo = dto.getListaAtaquesDTO().iterator();
-			boolean encontrado = false;
-			while (!encontrado && iteratorViejo.hasNext()) {
-				if (iteratorViejo.next().getGameIDAtaque().equals(gameID)) {
-					iteratorNuevo.remove();
-					iteratorViejo.remove();
-					encontrado = true;
-				}
-			}
+		for (final AtaqueDTO ataqueDTO : dto.getListaAtaquesDTO()) {
+			this.ataqueDao.eliminar(ataqueDTO);
 		}
 		logger.debug("Se inserta en la BBDD la diferencia");
 		for (final AtaqueDTO ataqueDTO : listaAtaques) {
 			ataqueDTO.setListaAtaquesDTO(listaAtaquesDTO);
 			this.ataqueDao.insertar(ataqueDTO);
-		}
-		logger.debug("Se eliminan los antiguos");
-		for (final AtaqueDTO ataqueDTO : dto.getListaAtaquesDTO()) {
-			this.ataqueDao.eliminar(ataqueDTO);
 		}
 	}
 

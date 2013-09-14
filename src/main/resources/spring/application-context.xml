@@ -87,6 +87,11 @@
 		<property name="ataqueDao" ref="ataqueDao" />
 		<property name="utilVistaServicio" ref="utilVistaServicio" />
 	</bean>
+	
+	<bean id="gestionAtaquesServicio" class="org.fbgk.ataque.vistas.impl.GestionAtaquesServicioImpl">
+		<property name="ataqueDao" ref="ataqueDao" />
+		<property name="utilVistaServicio" ref="utilVistaServicio" />
+	</bean>
 
 	<bean id="servidorServicio" class="org.fbgk.ataque.vistas.impl.ServidorServicioImpl">
 		<property name="ataqueDao" ref="ataqueDao" />

@@ -272,6 +272,12 @@ public class JugadoresDTO implements Serializable, RecuperarGameID, SetearSerial
 		this.gameID = gameID;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.fbgk.ataque.bbdd.interfaz.SetearSerializable#setId(java.lang.Integer)
+	 */
 	public void setId(final Integer id) {
 		this.jugadoresID = id;
 	}
@@ -344,6 +350,16 @@ public class JugadoresDTO implements Serializable, RecuperarGameID, SetearSerial
 	 */
 	public void setServidorDTO(final ServidorDTO servidorDTO) {
 		this.servidorDTO = servidorDTO;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.format("Nombre: %s", this.nombre);
 	}
 
 }

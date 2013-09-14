@@ -346,4 +346,9 @@ public class PueblosDTO implements Serializable, RecuperarGameID, SetearSerializ
 		this.y = y;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%s (%s|%s)", this.name, this.x, this.y);
+	}
+
 }

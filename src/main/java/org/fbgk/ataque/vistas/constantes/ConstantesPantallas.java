@@ -6,4 +6,6 @@ public class ConstantesPantallas {
 
 	public final static String	PANTALLA_GESTION_SERVIDORES	= "GestionServidores.bxml";
 
+	public final static String	PANTALLA_GESTION_ATAQUES	= "GestionAtaques.bxml";
+
 }

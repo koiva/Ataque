@@ -39,8 +39,10 @@ public class AtacadorAutomaticoServicioImpl extends AtacadorAutomaticoServicioBa
 	public void atacarTodasListas() {
 		final List<ListaAtaquesDTO> listaAtaques = this.ataqueDao.recuperarTodo(new ListaAtaquesDTO());
 		for (final ListaAtaquesDTO listaAtaquesDTO : listaAtaques) {
-			logger.debug("Empieza el ataque con la lista: {}", listaAtaquesDTO.getNombre());
-			this.atacarLista(listaAtaquesDTO);
+			if (listaAtaquesDTO.getIsActivo()) {
+				logger.debug("Empieza el ataque con la lista: {}", listaAtaquesDTO.getNombre());
+				this.atacarLista(listaAtaquesDTO);
+			}
 		}
 	}
 

@@ -49,6 +49,10 @@ public class ListaAtaquesDTO implements Serializable, SetearSerializable {
 	@JoinColumn(name = "ataquesID")
 	private List<AtaqueDTO>		listaAtaquesDTO;
 
+	/** The is activo. */
+	@Column
+	private Boolean				isActivo;
+
 	/** The lancero. */
 	@Column
 	private Integer				lancero				= Integer.valueOf(0);
@@ -298,6 +302,15 @@ public class ListaAtaquesDTO implements Serializable, SetearSerializable {
 	}
 
 	/**
+	 * Gets the checks if is activo.
+	 * 
+	 * @return the checks if is activo
+	 */
+	public Boolean getIsActivo() {
+		return this.isActivo;
+	}
+
+	/**
 	 * Gets the lancero.
 	 * 
 	 * @return the lancero
@@ -485,6 +498,16 @@ public class ListaAtaquesDTO implements Serializable, SetearSerializable {
 	 */
 	public void setId(final Integer id) {
 		this.listaAtaquesID = id;
+	}
+
+	/**
+	 * Sets the checks if is activo.
+	 * 
+	 * @param isActivo
+	 *            the new checks if is activo
+	 */
+	public void setIsActivo(final Boolean isActivo) {
+		this.isActivo = isActivo;
 	}
 
 	/**
