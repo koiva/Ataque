@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.protocol.BasicHttpContext;
 import org.fbgk.ataque.url.base.ClienteHTTPServicioBase;
 import org.fbgk.ataque.url.constantes.ConstantesURL;
 import org.fbgk.ataque.url.dto.EjecutarHTTPDTO;
@@ -78,6 +78,7 @@ public class ClienteHTTPServicioImpl extends ClienteHTTPServicioBase {
 	 * org.fbgk.ataque.url.ClienteHTTPServicio#ejecutarGet(org.fbgk.ataque.url
 	 * .dto.EjecutarHTTPDTO)
 	 */
+	@Override
 	public RespuestaHTTPDTO ejecutarGet(final EjecutarHTTPDTO ejecutarHTTPDTO) {
 		logger.debug("Ejecutando metodo de tipo GET");
 		return this.commonsLlamada(new HttpGet(ejecutarHTTPDTO.getUrl()), ejecutarHTTPDTO);
@@ -90,6 +91,7 @@ public class ClienteHTTPServicioImpl extends ClienteHTTPServicioBase {
 	 * org.fbgk.ataque.url.ClienteHTTPServicio#ejecutarPost(org.fbgk.ataque.
 	 * url.dto.EjecutarHTTPDTO)
 	 */
+	@Override
 	public RespuestaHTTPDTO ejecutarPost(final EjecutarHTTPDTO ejecutarHTTPDTO) {
 		logger.debug("Ejecutando metodo de tipo POST");
 		final HttpPost post = new HttpPost(ejecutarHTTPDTO.getUrl());
@@ -111,13 +113,14 @@ public class ClienteHTTPServicioImpl extends ClienteHTTPServicioBase {
 		return this.commonsLlamada(post, ejecutarHTTPDTO);
 	}
 
+	@Override
 	public void init() {
 		logger.debug("Restableciendo la configuracion del cliente http");
+		this.setCm(new PoolingClientConnectionManager());
+		this.getCm().setMaxTotal(200);
+		this.getCm().setDefaultMaxPerRoute(200);
+		this.setHttpClient(new DefaultHttpClient(this.getCm()));
+		this.setHttpContext(new BasicHttpContext());
 		this.getHttpContext().setAttribute(ClientContext.COOKIE_STORE, new BasicCookieStore());
-		this.getHttpClient().getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BEST_MATCH);
-		this.getHttpClient().getParams().setParameter(ClientPNames.CONN_MANAGER_TIMEOUT, Long.valueOf(360000000));
-		this.getHttpClient().getParams().setParameter(ClientPNames.HANDLE_REDIRECTS, Boolean.TRUE);
-		this.getHttpClient().getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-		this.getHttpClient().getParams().setParameter(ClientPNames.MAX_REDIRECTS, 50);
 	}
 }

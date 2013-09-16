@@ -53,26 +53,8 @@
 	<!-- Url -->
 	<bean id="clienteHTTPServicio" class="org.fbgk.ataque.url.impl.ClienteHTTPServicioImpl"
 		init-method="init">
-		<property name="httpClient">
-			<bean class="org.apache.http.impl.client.DefaultHttpClient">
-				<constructor-arg>
-					<ref bean="poolClientManager" />
-				</constructor-arg>
-			</bean>
-		</property>
-		<property name="httpContext">
-			<bean class="org.apache.http.protocol.BasicHttpContext" />
-		</property>
-		<property name="cm" ref="poolClientManager" />
 	</bean>
 
-	<bean id="cookieStore" class="org.apache.http.impl.client.BasicCookieStore" />
-
-	<bean id="poolClientManager"
-		class="org.apache.http.impl.conn.PoolingClientConnectionManager">
-		<property name="maxTotal" value="100" />
-		<property name="defaultMaxPerRoute" value="32" />
-	</bean>
 
 	<!-- Transformaciones -->
 	<bean id="transformacionServicio"
@@ -88,7 +70,7 @@
 		<property name="utilVistaServicio" ref="utilVistaServicio" />
 	</bean>
 	
-	<bean id="gestionAtaquesServicio" class="org.fbgk.ataque.vistas.impl.GestionAtaquesServicioImpl">
+	<bean id="gestionListaAtaquesServicio" class="org.fbgk.ataque.vistas.impl.GestionListaAtaquesServicioImpl">
 		<property name="ataqueDao" ref="ataqueDao" />
 		<property name="utilVistaServicio" ref="utilVistaServicio" />
 	</bean>
@@ -99,7 +81,12 @@
 	</bean>
 	
 	<bean id="utilVistaServicio" class="org.fbgk.ataque.vistas.impl.UtilVistaServicioImpl" />
-
+	
+	<bean id="gestionAtaqueServicio" class="org.fbgk.ataque.vistas.impl.GestionAtaqueServicioImpl">
+		<property name="ataqueDao" ref="ataqueDao" />
+		<property name="utilVistaServicio" ref="utilVistaServicio" />
+	</bean>
+ 
 	<!-- Acciones Vistas -->
 	<bean id="accionRelojAtaque" class="org.fbgk.ataque.vistas.actions.ActivarRelojAction">
 		<property name="atacadorAutomaticoServicio" ref="atacadorAutomaticoServicio" />
@@ -124,6 +111,8 @@
 		<property name="urlActionsServicio" ref="urlActionsServicio" />
 		<property name="ataqueDao" ref="ataqueDao" />
 	</bean>
+	
+	
 
 
 

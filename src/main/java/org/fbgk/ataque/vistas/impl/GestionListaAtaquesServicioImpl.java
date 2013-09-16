@@ -1,5 +1,7 @@
 package org.fbgk.ataque.vistas.impl;
 
+import java.util.List;
+
 import org.apache.pivot.beans.BXML;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Sequence;
@@ -28,7 +30,7 @@ import org.fbgk.ataque.guerrastribales.dto.ListaAtaquesDTO;
 import org.fbgk.ataque.guerrastribales.dto.LoginDTO;
 import org.fbgk.ataque.guerrastribales.dto.PueblosDTO;
 import org.fbgk.ataque.guerrastribales.dto.ServidorDTO;
-import org.fbgk.ataque.vistas.base.GestionAtaquesServicioBase;
+import org.fbgk.ataque.vistas.base.GestionListaAtaquesServicioBase;
 import org.fbgk.ataque.vistas.constantes.ConstantesPantallas;
 import org.fbgk.ataque.vistas.constantes.TipoAccion;
 import org.slf4j.Logger;
@@ -37,84 +39,19 @@ import org.slf4j.LoggerFactory;
 /**
  * The Class GestionAtaquesServicioImpl.
  */
-public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase implements TableViewSelectionListener, ButtonPressListener, WindowStateListener, ListButtonSelectionListener {
-
-	/** The logger. */
-	Logger				logger	= LoggerFactory.getLogger(GestionAtaquesServicioImpl.class);
-
-	/** The estado. */
-	private TipoAccion	estado;
-
-	/** The formulario. */
-	@BXML
-	private Frame		frameAtaque;
-
-	/** The formulario. */
-	@BXML
-	private Form		formulario;
-
-	/** The gestion tabla. */
-	@BXML
-	private TableView	gestionTabla;
-
-	/** The usuario cbx. */
-	@BXML
-	private ListButton	usuarioCbx;
-
-	/** The poblado cbx. */
-	@BXML
-	private ListButton	pobladoCbx;
-	/** The lista ataques id. */
-	@BXML
-	private TextInput	listaAtaquesID;
-
-	/** The nombre ataque. */
-	@BXML
-	private TextInput	nombreAtaque;
+public class GestionListaAtaquesServicioImpl extends GestionListaAtaquesServicioBase implements TableViewSelectionListener, ButtonPressListener, WindowStateListener, ListButtonSelectionListener {
 
 	/** The activar chk. */
 	@BXML
 	private Checkbox	activarChk;
 
-	/** The lancero txt. */
-	@BXML
-	private TextInput	lanceroTxt;
-
-	/** The espadas txt. */
-	@BXML
-	private TextInput	espadasTxt;
-
-	/** The hachas txt. */
-	@BXML
-	private TextInput	hachasTxt;
-
-	/** The arqueros txt. */
-	@BXML
-	private TextInput	arquerosTxt;
-
-	/** The espias txt. */
-	@BXML
-	private TextInput	espiasTxt;
-
-	/** The ligeros txt. */
-	@BXML
-	private TextInput	ligerosTxt;
-
-	/** The pesados txt. */
-	@BXML
-	private TextInput	pesadosTxt;
-
-	/** The caballo arquero txt. */
-	@BXML
-	private TextInput	caballoArqueroTxt;
-
 	/** The ariete txt. */
 	@BXML
 	private TextInput	arieteTxt;
 
-	/** The catapulta txt. */
+	/** The arqueros txt. */
 	@BXML
-	private TextInput	catapultaTxt;
+	private TextInput	arquerosTxt;
 
 	/** The button aceptar. */
 	@BXML
@@ -124,16 +61,81 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	@BXML
 	private PushButton	buttonEliminar;
 
-	/** The button salir. */
-	@BXML
-	private PushButton	buttonSalir;
-
 	/** The button nuevo. */
 	@BXML
 	private PushButton	buttonNuevo;
 
+	/** The button salir. */
+	@BXML
+	private PushButton	buttonSalir;
+	/** The caballo arquero txt. */
+	@BXML
+	private TextInput	caballoArqueroTxt;
+
+	/** The catapulta txt. */
+	@BXML
+	private TextInput	catapultaTxt;
+
+	/** The espadas txt. */
+	@BXML
+	private TextInput	espadasTxt;
+
+	/** The espias txt. */
+	@BXML
+	private TextInput	espiasTxt;
+
+	/** The estado. */
+	private TipoAccion	estado;
+
+	/** The formulario. */
+	@BXML
+	private Form		formulario;
+
+	/** The formulario. */
+	@BXML
+	private Frame		frameAtaque;
+
+	/** The gestion tabla. */
+	@BXML
+	private TableView	gestionTabla;
+
+	/** The hachas txt. */
+	@BXML
+	private TextInput	hachasTxt;
+
+	/** The lancero txt. */
+	@BXML
+	private TextInput	lanceroTxt;
+
+	/** The ligeros txt. */
+	@BXML
+	private TextInput	ligerosTxt;
+
+	/** The lista ataques id. */
+	@BXML
+	private TextInput	listaAtaquesID;
+
+	/** The logger. */
+	Logger				logger	= LoggerFactory.getLogger(GestionListaAtaquesServicioImpl.class);
+
+	/** The nombre ataque. */
+	@BXML
+	private TextInput	nombreAtaque;
+
+	/** The pesados txt. */
+	@BXML
+	private TextInput	pesadosTxt;
+
+	/** The poblado cbx. */
+	@BXML
+	private ListButton	pobladoCbx;
+
 	/** The prompt eliminacion. */
 	private Prompt		promptEliminacion;
+
+	/** The usuario cbx. */
+	@BXML
+	private ListButton	usuarioCbx;
 
 	/*
 	 * (non-Javadoc)
@@ -142,6 +144,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.ButtonPressListener#buttonPressed(org.apache.pivot
 	 * .wtk.Button)
 	 */
+	@Override
 	public void buttonPressed(final Button button) {
 		this.logger.debug("Boton presionado");
 		if (button.equals(this.buttonAceptar)) {
@@ -244,10 +247,10 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 		this.nombreAtaque.setText(listaAtaquesDTO.getNombre());
 		this.listaAtaquesID.setText(listaAtaquesDTO.getListaAtaquesID().toString());
 		this.usuarioCbx.setListData(this.utilVistaServicio.recuperarLista(this.ataqueDao.recuperarTodo(new LoginDTO())));
-		final PueblosDTO pueblosDTO = this.ataqueDao.consultar("FROM PueblosDTO WHERE gameID=?", new Object[] { listaAtaquesDTO.getGameIDPropio() });
+		final PueblosDTO pueblosDTO = this.ataqueDao.consultar("FROM PueblosDTO WHERE gameID=? and servidorID=?", listaAtaquesDTO.getGameIDPropio(), listaAtaquesDTO.getServidorDTO().getServidorID());
 		final LoginDTO loginDTO = this.ataqueDao.consultar("FROM LoginDTO WHERE usuario=?", new Object[] { pueblosDTO.getJugadoresDTO().getNombre() });
-		final JugadoresDTO jugadoresDTO = this.ataqueDao.consultar("FROM JugadoresDTO WHERE nombre=?", new Object[] { loginDTO.getUsuario() });
-		this.pobladoCbx.setListData(this.utilVistaServicio.recuperarLista(this.ataqueDao.buscar("FROM PueblosDTO WHERE jugadoresID=?", jugadoresDTO.getJugadoresID())));
+		final JugadoresDTO jugadoresDTO = this.ataqueDao.consultar("FROM JugadoresDTO WHERE nombre=? and servidorID=?", loginDTO.getUsuario(), listaAtaquesDTO.getServidorDTO().getServidorID());
+		this.pobladoCbx.setListData(this.utilVistaServicio.recuperarLista(this.ataqueDao.buscar("FROM PueblosDTO WHERE jugadoresID=? and servidorID=?", jugadoresDTO.getJugadoresID(), listaAtaquesDTO.getServidorDTO().getServidorID())));
 		for (final Object loginDTO2 : this.usuarioCbx.getListData()) {
 			if (loginDTO.getLoginID().equals(((LoginDTO) loginDTO2).getLoginID())) {
 				this.usuarioCbx.setSelectedItem(loginDTO2);
@@ -268,9 +271,10 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.fbgk.ataque.vistas.ComunVistaServicio#open(org.apache.pivot.wtk.Display
 	 * , org.apache.pivot.wtk.Window)
 	 */
+	@Override
 	public void open(final Display display, final Window window) {
 		if (!this.ataqueDao.recuperarTodo(new ServidorDTO()).isEmpty() && !this.ataqueDao.recuperarTodo(new LoginDTO()).isEmpty()) {
-			this.frameAtaque = this.utilVistaServicio.openFrame(this.frameAtaque, display, window, this, ConstantesPantallas.PANTALLA_GESTION_ATAQUES);
+			this.frameAtaque = this.utilVistaServicio.openFrame(this.frameAtaque, display, window, this, ConstantesPantallas.PANTALLA_GESTION_LISTA_ATAQUES);
 			if (this.frameAtaque != null) {
 				this.gestionTabla.getTableViewSelectionListeners().add(this);
 				this.buttonAceptar.getButtonPressListeners().add(this);
@@ -297,6 +301,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.WindowStateListener#previewWindowClose(org.apache
 	 * .pivot.wtk.Window)
 	 */
+	@Override
 	public Vote previewWindowClose(final Window window) {
 		final String opcion = (String) this.promptEliminacion.getSelectedOption();
 		if (opcion.equals("Aceptar")) {
@@ -316,6 +321,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.WindowStateListener#previewWindowOpen(org.apache
 	 * .pivot.wtk.Window)
 	 */
+	@Override
 	public Vote previewWindowOpen(final Window window) {
 		return Vote.APPROVE;
 	}
@@ -327,6 +333,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.ListButtonSelectionListener#selectedIndexChanged
 	 * (org.apache.pivot.wtk.ListButton, int)
 	 */
+	@Override
 	public void selectedIndexChanged(final ListButton listButton, final int previousSelectedIndex) {
 
 	}
@@ -338,10 +345,16 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.ListButtonSelectionListener#selectedItemChanged(
 	 * org.apache.pivot.wtk.ListButton, java.lang.Object)
 	 */
+	@Override
 	public void selectedItemChanged(final ListButton listButton, final Object previousSelectedItem) {
 		if (listButton.getSelectedItem() != null) {
-			final JugadoresDTO jugadoresDTO = this.ataqueDao.consultar("FROM JugadoresDTO WHERE nombre=?", new Object[] { ((LoginDTO) listButton.getSelectedItem()).getUsuario() });
-			this.pobladoCbx.setListData(this.utilVistaServicio.recuperarLista(this.ataqueDao.buscar("FROM PueblosDTO WHERE jugadoresID=?", jugadoresDTO.getJugadoresID())));
+			final List<JugadoresDTO> jugadoresDTO = this.ataqueDao.buscar("FROM JugadoresDTO WHERE nombre=?", new Object[] { ((LoginDTO) listButton.getSelectedItem()).getUsuario() });
+			final List<PueblosDTO> listaPueblos = new java.util.ArrayList<PueblosDTO>();
+			for (final JugadoresDTO jugadoresDTO2 : jugadoresDTO) {
+				final List<PueblosDTO> listaInterna = this.ataqueDao.buscar("FROM PueblosDTO WHERE jugadoresID=?", jugadoresDTO2.getJugadoresID());
+				listaPueblos.addAll(listaInterna);
+			}
+			this.pobladoCbx.setListData(this.utilVistaServicio.recuperarLista(listaPueblos));
 		}
 	}
 
@@ -352,6 +365,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.TableViewSelectionListener#selectedRangeAdded(org
 	 * .apache.pivot.wtk.TableView, int, int)
 	 */
+	@Override
 	public void selectedRangeAdded(final TableView tableView, final int rangeStart, final int rangeEnd) {
 		// TODO Auto-generated method stub
 
@@ -364,6 +378,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.TableViewSelectionListener#selectedRangeRemoved(
 	 * org.apache.pivot.wtk.TableView, int, int)
 	 */
+	@Override
 	public void selectedRangeRemoved(final TableView tableView, final int rangeStart, final int rangeEnd) {
 		// TODO Auto-generated method stub
 
@@ -376,6 +391,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.TableViewSelectionListener#selectedRangesChanged
 	 * (org.apache.pivot.wtk.TableView, org.apache.pivot.collections.Sequence)
 	 */
+	@Override
 	public void selectedRangesChanged(final TableView tableView, final Sequence<Span> previousSelectedRanges) {
 		// TODO Auto-generated method stub
 
@@ -388,6 +404,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.TableViewSelectionListener#selectedRowChanged(org
 	 * .apache.pivot.wtk.TableView, java.lang.Object)
 	 */
+	@Override
 	public void selectedRowChanged(final TableView tableView, final Object previousSelectedRow) {
 		final int select = this.gestionTabla.getSelectedIndex();
 		if (select != -1) {
@@ -608,6 +625,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.WindowStateListener#windowClosed(org.apache.pivot
 	 * .wtk.Window, org.apache.pivot.wtk.Display, org.apache.pivot.wtk.Window)
 	 */
+	@Override
 	public void windowClosed(final Window window, final Display display, final Window owner) {
 
 	}
@@ -619,6 +637,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.WindowStateListener#windowCloseVetoed(org.apache
 	 * .pivot.wtk.Window, org.apache.pivot.util.Vote)
 	 */
+	@Override
 	public void windowCloseVetoed(final Window window, final Vote reason) {
 
 	}
@@ -630,6 +649,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.WindowStateListener#windowOpened(org.apache.pivot
 	 * .wtk.Window)
 	 */
+	@Override
 	public void windowOpened(final Window window) {
 
 	}
@@ -641,6 +661,7 @@ public class GestionAtaquesServicioImpl extends GestionAtaquesServicioBase imple
 	 * org.apache.pivot.wtk.WindowStateListener#windowOpenVetoed(org.apache.
 	 * pivot.wtk.Window, org.apache.pivot.util.Vote)
 	 */
+	@Override
 	public void windowOpenVetoed(final Window window, final Vote reason) {
 
 	}

@@ -1,0 +1,109 @@
+<Frame title="Gestion de servidores" maximized="false" xmlns:bxml="http://pivot.apache.org/bxml" bxml:id="frameAtaque" xmlns="org.apache.pivot.wtk">
+	<TablePane>
+		<columns>
+			<TablePane.Column width="1*" />
+		</columns>
+		<TablePane.Row height="1*">
+			<Border styles="{padding:6}">
+				<ScrollPane horizontalScrollBarPolicy="fill">
+					<TableView bxml:id="gestionTabla">
+						<columns>
+							<TableView.Column name="listaAtaquesID" width="1*" headerData="ID" />
+							<TableView.Column name="nombre" width="2*" headerData="Nombre" />
+							<TableView.Column name="gameIDPropio" width="2*" headerData="GameID" />
+							<TableView.Column name="servidorDTO" width="2*" headerData="Servidor" />
+						</columns>
+					</TableView>
+					<columnHeader>
+						<TableViewHeader tableView="$gestionTabla" sortMode="single_column" />
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+		</TablePane.Row>
+		<TablePane.Row height="1*">
+			<Border styles="{padding:6}">
+				<Form bxml:id="formulario">
+					<Form.Section heading="Actualización lista ataque">
+						<TextInput bxml:id="listaAtaquesID" visible="false" />
+						<BoxPane Form.label="Nombre Ataque">
+							<TextInput bxml:id="nombreAtaque" textKey="nombre" />
+						</BoxPane>
+						<BoxPane Form.label="Usuario">
+							<ListButton bxml:id="usuarioCbx" />
+						</BoxPane>
+						<BoxPane Form.label="Poblado">
+							<ListButton bxml:id="pobladoCbx" />
+						</BoxPane>
+						<BoxPane Form.label="Activar">
+							<Checkbox bxml:id="activarChk" />
+						</BoxPane>
+						<TablePane>
+							<columns>
+								<TablePane.Column width="1*" />
+								<TablePane.Column width="1*" />
+							</columns>
+							<TablePane.Row height="1*">
+								<Border styles="{padding:6}">
+									<BoxPane Form.label="Lancero">
+										<ImageView image="@images/units/unit_spear.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="lanceroTxt" textKey="lancero" />
+									</BoxPane>
+									<BoxPane Form.label="Espadas">
+										<ImageView image="@images/units/unit_sword.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="espadasTxt" textKey="espadas" />
+									</BoxPane>
+									<BoxPane Form.label="Hachas">
+										<ImageView image="@images/units/unit_axe.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="hachasTxt" textKey="hachas" />
+									</BoxPane>
+									<BoxPane Form.label="Arqueros">
+										<ImageView image="@images/units/unit_archer.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="arquerosTxt" textKey="arquero" />
+									</BoxPane>
+									<BoxPane Form.label="Espías">
+										<ImageView image="@images/units/unit_spy.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="espiasTxt" textKey="espias" />
+									</BoxPane>
+								</Border>
+							</TablePane.Row>
+							<TablePane.Row height="1*">
+								<Border styles="{padding:6}">
+									<BoxPane Form.label="Caballería ligera">
+										<ImageView image="@images/units/unit_light.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="ligerosTxt" textKey="ligeros" />
+									</BoxPane>
+									<BoxPane Form.label="Caballería pesada">
+										<ImageView image="@images/units/unit_heavy.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="pesadosTxt" textKey="pesados" />
+									</BoxPane>
+									<BoxPane Form.label="Caballería arquera">
+										<ImageView image="@images/units/unit_marcher.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="caballoArqueroTxt" textKey="caballoArquero" />
+									</BoxPane>
+									<BoxPane Form.label="Arietes">
+										<ImageView image="@images/units/unit_ram.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="arieteTxt" textKey="ariete" />
+									</BoxPane>
+									<BoxPane Form.label="Catapulta">
+										<ImageView image="@images/units/unit_catapult.png" />
+										<TextInput preferredWidth="60" text="0" bxml:id="catapultaTxt" textKey="catapulta" />
+									</BoxPane>
+								</Border>
+							</TablePane.Row>
+						</TablePane>
+					</Form.Section>
+				</Form>
+			</Border>
+		</TablePane.Row>
+		<TablePane.Row height="-1">
+			<Border styles="{padding:6}">
+				<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
+					<PushButton bxml:id="buttonNuevo" buttonData="Nuevo" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonAceptar" buttonData="Aceptar" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonEliminar" buttonData="Eliminar" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonSalir" buttonData="Salir" styles="{minimumAspectRatio:3}" />
+				</BoxPane>
+			</Border>
+		</TablePane.Row>
+	</TablePane>
+</Frame>

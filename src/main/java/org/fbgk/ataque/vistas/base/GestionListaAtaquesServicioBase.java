@@ -1,13 +1,13 @@
 package org.fbgk.ataque.vistas.base;
 
 import org.fbgk.ataque.bbdd.AtaqueDao;
-import org.fbgk.ataque.vistas.GestionAtaquesServicio;
+import org.fbgk.ataque.vistas.GestionListaAtaquesServicio;
 import org.fbgk.ataque.vistas.UtilVistaServicio;
 
 /**
  * The Class GestionAtaquesServicioBase.
  */
-public abstract class GestionAtaquesServicioBase implements GestionAtaquesServicio {
+public abstract class GestionListaAtaquesServicioBase implements GestionListaAtaquesServicio {
 
 	/** The ataque dao. */
 	protected AtaqueDao			ataqueDao;

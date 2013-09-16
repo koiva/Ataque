@@ -90,16 +90,19 @@ public class URLActionsImpl extends URLActionsBase {
 	 * org.fbgk.ataque.actions.URLActionsServicio#atacarListaBarbaroTodo(java
 	 * .lang.Integer, java.lang.Integer)
 	 */
+	@Override
 	public List<AtaqueDTO> atacarListaBarbaroTodo(final Integer listaAtaquesID, final Integer loginID) {
 		logger.debug("Buscamos los barbaros necesarios");
 		final List<AtaqueDTO> ataqueDTOs = this.ataqueDao.buscar("FROM AtaqueDTO WHERE listaAtaquesID=? order by tiempoAtaque,distanciaMax asc", listaAtaquesID);
 		final List<AtaqueDTO> listaAtacados = new ArrayList<AtaqueDTO>();
+		this.clienteHTTPServicio.init();
 		logger.debug("Comprobando login");
 		if (this.loginSiNoLoEsta(loginID, ataqueDTOs.get(0).getListaAtaquesDTO().getServidorDTO().getServidorID())) {
 			final Integer integer = this.numeroAtaques(this.ataqueDao.consultar(new ListaAtaquesDTO(), listaAtaquesID), loginID);
 			logger.debug("Numero de ataques disponibles con la configuración actual: {}", integer);
 			for (int x = 0; x < integer; x++) {
 				final AtaqueDTO ataqueDTO = ataqueDTOs.get(x);
+				logger.debug("Siguiente ataque, GameID: {}", ataqueDTO.getGameIDAtaque());
 				if (this.atacarConAtaqueDTO(ataqueDTO.getListaAtaquesDTO().getServidorDTO(), ataqueDTO, loginID, ataqueDTO.getListaAtaquesDTO().getGameIDPropio(), Boolean.TRUE)) {
 					listaAtacados.add(ataqueDTO);
 				}
@@ -108,6 +111,7 @@ public class URLActionsImpl extends URLActionsBase {
 		return listaAtacados;
 	}
 
+	@Override
 	public List<AtaqueDTO> atacarListaBarbaroTodo(final ListaAtaquesDTO listaAtaquesID, final LoginDTO loginID) {
 		return null;
 	}
@@ -119,6 +123,7 @@ public class URLActionsImpl extends URLActionsBase {
 	 * org.fbgk.ataque.actions.URLActionsServicio#atacarSiguienteBarbaro(java
 	 * .lang.Integer, java.lang.Integer)
 	 */
+	@Override
 	public AtaqueDTO atacarSiguienteBarbaro(final Integer listaAtaquesID, final Integer loginID) {
 		logger.debug("Se busca el siguiente ataque de Barbaro");
 		final List<AtaqueDTO> ataqueDTOs = this.ataqueDao.buscar("FROM AtaqueDTO WHERE listaAtaquesID=? order by tiempoAtaque,distanciaMax asc", listaAtaquesID);
@@ -145,6 +150,7 @@ public class URLActionsImpl extends URLActionsBase {
 	 * org.fbgk.ataque.actions.URLActions#comprobarTropas(java.lang.Integer,
 	 * java.lang.Integer, java.lang.Integer)
 	 */
+	@Override
 	public Map<String, String> comprobarTropas(final Integer loginID, final Integer serverID, final Integer poblado) {
 		Map<String, String> mapeo = new HashMap<String, String>();
 		if (this.loginSiNoLoEsta(loginID, serverID)) {
@@ -179,6 +185,7 @@ public class URLActionsImpl extends URLActionsBase {
 	 * 
 	 * @see org.fbgk.ataque.actions.URLActions#isLogin(java.lang.Integer)
 	 */
+	@Override
 	public Boolean isLogin(final Integer loginID, final Integer serverID) {
 		Boolean respuesta = Boolean.FALSE;
 		logger.info("Buscando los datos facilitados");
@@ -226,6 +233,7 @@ public class URLActionsImpl extends URLActionsBase {
 	 * 
 	 * @see org.fbgk.ataque.actions.URLActions#login(java.lang.Integer)
 	 */
+	@Override
 	public Boolean login(final Integer loginID, final Integer serverID) {
 		logger.info("Se intenta hacer Login con el usuario: {} y en el server: {}", loginID, serverID);
 		final LoginDTO loginDTO = this.ataqueDao.consultar(new LoginDTO(), loginID);
@@ -272,6 +280,7 @@ public class URLActionsImpl extends URLActionsBase {
 	 * org.fbgk.ataque.actions.URLActions#loginSiNoLoEsta(java.lang.Integer,
 	 * java.lang.Integer)
 	 */
+	@Override
 	public Boolean loginSiNoLoEsta(final Integer loginID, final Integer serverID) {
 		Boolean respuesta = Boolean.FALSE;
 		final LoginDTO loginDTO = this.ataqueDao.consultar(new LoginDTO(), loginID);
@@ -395,7 +404,7 @@ public class URLActionsImpl extends URLActionsBase {
 			String url = String.format("%s%s", this.creacionURLLogin(servidorDTO), GuerrasTribalesActions.ACTION_FORM_SERVER);
 			url = String.format(url, servidorDTO.getServer());
 			respuestaHTTPDTO = this.clienteHTTPServicio.ejecutarPost(new EjecutarHTTPDTO(url, mapeo, false, servidorDTO.getJuego(), servidorDTO.getServer(), Boolean.TRUE));
-			if (respuestaHTTPDTO.getEstado() == ConstantesURL.PETICION_LOGIN_OK || respuestaHTTPDTO.getEstado() == ConstantesURL.PETICION_OK) {
+			if ((respuestaHTTPDTO.getEstado() == ConstantesURL.PETICION_LOGIN_OK || respuestaHTTPDTO.getEstado() == ConstantesURL.PETICION_OK) && respuestaHTTPDTO.getRespuesta().getHeaders("Location") != null) {
 				logger.debug("Buscando la direccion de entrada localizada en el header > Location");
 				final Header urlEnvio = respuestaHTTPDTO.getRespuesta().getHeaders("Location")[0];
 				respuestaHTTPDTO = this.clienteHTTPServicio.ejecutarGet(new EjecutarHTTPDTO(urlEnvio.getValue(), null, Boolean.FALSE, null, null, Boolean.TRUE));

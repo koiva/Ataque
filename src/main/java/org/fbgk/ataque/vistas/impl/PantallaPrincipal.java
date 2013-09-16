@@ -12,6 +12,7 @@ import org.fbgk.ataque.actions.URLActionsServicio;
 import org.fbgk.ataque.main.Marshaller;
 import org.fbgk.ataque.transformacion.TransformacionServicio;
 import org.fbgk.ataque.vistas.GestionAtaquesServicio;
+import org.fbgk.ataque.vistas.GestionListaAtaquesServicio;
 import org.fbgk.ataque.vistas.ServidorServicio;
 import org.fbgk.ataque.vistas.actions.ActivarRelojAction;
 import org.fbgk.ataque.vistas.base.PantallaPrincipalBase;
@@ -23,11 +24,11 @@ import org.slf4j.LoggerFactory;
  */
 public class PantallaPrincipal extends PantallaPrincipalBase {
 
-	@BXML
-	private FlowPane	flowPane;
-
 	/** The logger. */
 	static Logger		logger	= LoggerFactory.getLogger(PantallaPrincipal.class);
+
+	@BXML
+	private FlowPane	flowPane;
 
 	/**
 	 * Menus ayuda.
@@ -85,7 +86,7 @@ public class PantallaPrincipal extends PantallaPrincipalBase {
 		Action.getNamedActions().put("mirarAtaques", new Action() {
 			@Override
 			public void perform(final Component source) {
-
+				PantallaPrincipal.this.gestionAtaquesServicio.open(PantallaPrincipal.this.flowPane.getDisplay(), PantallaPrincipal.this.flowPane.getWindow());
 			}
 		});
 	}
@@ -97,6 +98,7 @@ public class PantallaPrincipal extends PantallaPrincipalBase {
 	 * org.apache.pivot.wtk.Application#startup(org.apache.pivot.wtk.Display,
 	 * org.apache.pivot.collections.Map)
 	 */
+	@Override
 	public void startup(final Display display, final Map<String, String> mapeo) throws Exception {
 		// this.context = new ClassPathXmlApplicationContext("/spring/*.xml");
 		this.menusAyuda();
@@ -108,6 +110,7 @@ public class PantallaPrincipal extends PantallaPrincipalBase {
 		this.transformacionServicio = Marshaller.context.getBean(TransformacionServicio.class);
 		this.urlActionsServicio = Marshaller.context.getBean(URLActionsServicio.class);
 		this.servidorServicio = Marshaller.context.getBean(ServidorServicio.class);
+		this.gestionListaAtaquesServicio = Marshaller.context.getBean(GestionListaAtaquesServicio.class);
 		this.gestionAtaquesServicio = Marshaller.context.getBean(GestionAtaquesServicio.class);
 		this.open(display);
 	}

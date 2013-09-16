@@ -25,29 +25,37 @@ public class ListaAtaquesDTO implements Serializable, SetearSerializable {
 	/** The Constant serialVersionUID. */
 	private static final long	serialVersionUID	= 8253003412627107069L;
 
-	/** The lista ataques id. */
+	/** The ariete. */
 	@Column
-	@Id
-	@GeneratedValue
-	private Integer				listaAtaquesID;
+	private Integer				ariete				= Integer.valueOf(0);
 
-	/** The nombre. */
+	/** The arquero. */
 	@Column
-	private String				nombre;
+	private Integer				arquero				= Integer.valueOf(0);
+
+	/** The caballo arquero. */
+	@Column
+	private Integer				caballoArquero		= Integer.valueOf(0);
+
+	/** The catapulta. */
+	@Column
+	private Integer				catapulta			= Integer.valueOf(0);
+
+	/** The espadas. */
+	@Column
+	private Integer				espadas				= Integer.valueOf(0);
+
+	/** The espias. */
+	@Column
+	private Integer				espias				= Integer.valueOf(0);
 
 	/** The game id propio. */
 	@Column
 	private Integer				gameIDPropio;
 
-	/** The servidor dto. */
-	@JoinColumn(name = "servidorID")
-	@ManyToOne
-	private ServidorDTO			servidorDTO;
-
-	/** The lista ataques dto. */
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ataquesID")
-	private List<AtaqueDTO>		listaAtaquesDTO;
+	/** The hachas. */
+	@Column
+	private Integer				hachas				= Integer.valueOf(0);
 
 	/** The is activo. */
 	@Column
@@ -57,45 +65,37 @@ public class ListaAtaquesDTO implements Serializable, SetearSerializable {
 	@Column
 	private Integer				lancero				= Integer.valueOf(0);
 
-	/** The espadas. */
-	@Column
-	private Integer				espadas				= Integer.valueOf(0);
-
-	/** The hachas. */
-	@Column
-	private Integer				hachas				= Integer.valueOf(0);
-
-	/** The espias. */
-	@Column
-	private Integer				espias				= Integer.valueOf(0);
-
 	/** The ligeros. */
 	@Column
 	private Integer				ligeros				= Integer.valueOf(0);
 
-	/** The pesados. */
-	@Column
-	private Integer				pesados				= Integer.valueOf(0);
+	/** The lista ataques dto. */
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ataquesID")
+	private List<AtaqueDTO>		listaAtaquesDTO;
 
-	/** The ariete. */
+	/** The lista ataques id. */
 	@Column
-	private Integer				ariete				= Integer.valueOf(0);
-
-	/** The catapulta. */
-	@Column
-	private Integer				catapulta			= Integer.valueOf(0);
+	@Id
+	@GeneratedValue
+	private Integer				listaAtaquesID;
 
 	/** The noble. */
 	@Column
 	private Integer				noble				= Integer.valueOf(0);
 
-	/** The arquero. */
+	/** The nombre. */
 	@Column
-	private Integer				arquero				= Integer.valueOf(0);
+	private String				nombre;
 
-	/** The caballo arquero. */
+	/** The pesados. */
 	@Column
-	private Integer				caballoArquero		= Integer.valueOf(0);
+	private Integer				pesados				= Integer.valueOf(0);
+
+	/** The servidor dto. */
+	@JoinColumn(name = "servidorID")
+	@ManyToOne
+	private ServidorDTO			servidorDTO;
 
 	/*
 	 * (non-Javadoc)
@@ -496,6 +496,7 @@ public class ListaAtaquesDTO implements Serializable, SetearSerializable {
 	 * @see
 	 * org.fbgk.ataque.bbdd.interfaz.SetearSerializable#setId(java.lang.Integer)
 	 */
+	@Override
 	public void setId(final Integer id) {
 		this.listaAtaquesID = id;
 	}
@@ -588,6 +589,11 @@ public class ListaAtaquesDTO implements Serializable, SetearSerializable {
 	 */
 	public void setServidorDTO(final ServidorDTO servidorDTO) {
 		this.servidorDTO = servidorDTO;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s (%s)", this.nombre, (this.isActivo ? "ACTIVO" : "DESACTIVADO"));
 	}
 
 }

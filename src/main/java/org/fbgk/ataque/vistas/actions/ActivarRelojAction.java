@@ -19,11 +19,11 @@ public class ActivarRelojAction extends Action {
 	/** The logger. */
 	static Logger						logger	= LoggerFactory.getLogger(ActivarRelojAction.class);
 
-	/** The timer. */
-	private Timer						timer;
-
 	/** The atacador automatico servicio. */
 	private AtacadorAutomaticoServicio	atacadorAutomaticoServicio;
+
+	/** The timer. */
+	private Timer						timer;
 
 	/*
 	 * (non-Javadoc)
@@ -39,7 +39,11 @@ public class ActivarRelojAction extends Action {
 			this.timer.scheduleAtFixedRate(new TimerTask() {
 				@Override
 				public void run() {
-					ActivarRelojAction.this.atacadorAutomaticoServicio.atacarTodasListas();
+					try {
+						ActivarRelojAction.this.atacadorAutomaticoServicio.atacarTodasListas();
+					} catch (final Exception ex) {
+						logger.error("Encontrado un error en el timer.", ex);
+					}
 				}
 			}, 0, 300000);
 			dataMenu.setText("Parar el atacador");

@@ -5,6 +5,7 @@ import org.apache.pivot.wtk.Window;
 import org.fbgk.ataque.actions.URLActionsServicio;
 import org.fbgk.ataque.transformacion.TransformacionServicio;
 import org.fbgk.ataque.vistas.GestionAtaquesServicio;
+import org.fbgk.ataque.vistas.GestionListaAtaquesServicio;
 import org.fbgk.ataque.vistas.JugadoresServicio;
 import org.fbgk.ataque.vistas.ServidorServicio;
 import org.fbgk.ataque.vistas.impl.JugadoresServicioImpl;
@@ -14,29 +15,33 @@ import org.fbgk.ataque.vistas.impl.JugadoresServicioImpl;
  */
 public abstract class PantallaPrincipalBase extends Window implements Application {
 
-	/** The jugadores servicio. */
-	protected JugadoresServicio			jugadoresServicio;
-
-	/** The transformacion servicio. */
-	protected TransformacionServicio	transformacionServicio;
-
-	/** The url actions servicio. */
-	protected URLActionsServicio		urlActionsServicio;
-
-	/** The servidor servicio. */
-	protected ServidorServicio			servidorServicio;
+	/** The gestion ataques servicio. */
+	protected GestionAtaquesServicio		gestionAtaquesServicio;
 
 	/** The gestion ataques servicio. */
-	protected GestionAtaquesServicio	gestionAtaquesServicio;
+	protected GestionListaAtaquesServicio	gestionListaAtaquesServicio;
+
+	/** The jugadores servicio. */
+	protected JugadoresServicio				jugadoresServicio;
+
+	/** The servidor servicio. */
+	protected ServidorServicio				servidorServicio;
+
+	/** The transformacion servicio. */
+	protected TransformacionServicio		transformacionServicio;
+
+	/** The url actions servicio. */
+	protected URLActionsServicio			urlActionsServicio;
 
 	/** The window. */
-	protected Window					window;
+	protected Window						window;
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.apache.pivot.wtk.Application#resume()
 	 */
+	@Override
 	public void resume() throws Exception {
 
 	}
@@ -49,6 +54,16 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	 */
 	public void setGestionAtaquesServicio(final GestionAtaquesServicio gestionAtaquesServicio) {
 		this.gestionAtaquesServicio = gestionAtaquesServicio;
+	}
+
+	/**
+	 * Sets the gestion lista ataques servicio.
+	 * 
+	 * @param gestionListaAtaquesServicio
+	 *            the new gestion lista ataques servicio
+	 */
+	public void setGestionListaAtaquesServicio(final GestionListaAtaquesServicio gestionListaAtaquesServicio) {
+		this.gestionListaAtaquesServicio = gestionListaAtaquesServicio;
 	}
 
 	/**
@@ -106,6 +121,7 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	 * 
 	 * @see org.apache.pivot.wtk.Application#shutdown(boolean)
 	 */
+	@Override
 	public boolean shutdown(final boolean arg0) throws Exception {
 		this.window.close();
 		return false;
@@ -116,6 +132,7 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	 * 
 	 * @see org.apache.pivot.wtk.Application#suspend()
 	 */
+	@Override
 	public void suspend() throws Exception {
 
 	}

@@ -24,6 +24,7 @@ public class BarbarosServicioImpl extends BarbarosServicioBase {
 	 * org.fbgk.ataque.actions.BarbarosServicio#buscarBarbaros(org.fbgk.ataque
 	 * .guerrastribales.dto.PueblosDTO, java.lang.Integer)
 	 */
+	@Override
 	public List<AtaqueDTO> buscarBarbaros(final PueblosDTO pueblosDTO, final Integer distMax) {
 		logger.debug("Buscando los barbaros entre con la distancia máxima: {}", distMax);
 		final List<AtaqueDTO> listAtaquesDTO = new ArrayList<AtaqueDTO>();
@@ -54,12 +55,13 @@ public class BarbarosServicioImpl extends BarbarosServicioBase {
 	 * .ataque.guerrastribales.dto.PueblosDTO, java.lang.Integer,
 	 * org.fbgk.ataque.guerrastribales.dto.ListaAtaquesDTO)
 	 */
+	@Override
 	public void mantenimientoBarbaros(final PueblosDTO pueblosDTO, final Integer distMax, final ListaAtaquesDTO listaAtaquesDTO) {
 		logger.debug("Mantenimiento de los barbaros invocado");
 		final List<AtaqueDTO> listaAtaques = this.buscarBarbaros(pueblosDTO, distMax);
-		final ListaAtaquesDTO dto = this.ataqueDao.consultar(new ListaAtaquesDTO(), listaAtaquesDTO.getListaAtaquesID());
 		logger.debug("Se esta procesando el numero de bárbaros segun la distancia máxima y si ha sido conquistado");
-		for (final AtaqueDTO ataqueDTO : dto.getListaAtaquesDTO()) {
+		final List<AtaqueDTO> listaAtaquesAntiguo = this.ataqueDao.buscar("FROM AtaqueDTO WHERE listaAtaquesID=?", listaAtaquesDTO.getListaAtaquesID());
+		for (final AtaqueDTO ataqueDTO : listaAtaquesAntiguo) {
 			this.ataqueDao.eliminar(ataqueDTO);
 		}
 		logger.debug("Se inserta en la BBDD la diferencia");
@@ -68,5 +70,4 @@ public class BarbarosServicioImpl extends BarbarosServicioBase {
 			this.ataqueDao.insertar(ataqueDTO);
 		}
 	}
-
 }
