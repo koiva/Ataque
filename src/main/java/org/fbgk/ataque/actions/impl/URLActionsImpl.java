@@ -59,10 +59,9 @@ public class URLActionsImpl extends URLActionsBase {
 		url = String.format(GuerrasTribalesActions.ATAQUE_SEGUNDO_PROCESO, servidorDTO.getServer(), servidorDTO.getJuego(), servidorDTO.getInternalizacion(), gameID);
 		logger.debug("Primera parte del Ataque");
 		final RespuestaHTTPDTO respuestaHTTPDTO2 = this.clienteHTTPServicio.ejecutarPost(new EjecutarHTTPDTO(url, this.mapeoAtaqueInput(respuestaHTTPDTO, ataqueDTO.getListaAtaquesDTO()), false, null, null, Boolean.TRUE));
-		final Document document = Jsoup.parse(this.respuestaString(respuestaHTTPDTO2));
-		final Elements elements2 = document.select("table.vis > tbody > tr > td");
-		final Elements elements3 = elements2.get(3).getAllElements();
-		if (!elements3.get(0).text().startsWith("<")) {
+		final String documento = this.respuestaString(respuestaHTTPDTO2);
+		final Document document = Jsoup.parse(documento);
+		if (documento.indexOf("Usuario") == -1) {
 			logger.debug("Atacando al barbaro");
 			final Elements elements = document.select("input");
 			final Map<String, String> mapeo = new HashMap<String, String>();

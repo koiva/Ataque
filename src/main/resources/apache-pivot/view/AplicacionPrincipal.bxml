@@ -57,6 +57,11 @@
 									<content:MenuItemData text="Mirar ataques realizados" icon="@images/return.png" keyboardShortcut="CTRL-O" />
 								</buttonData>
 							</Menu.Item>
+							<Menu.Item action="gestionBarbaros">
+								<buttonData>
+									<content:MenuItemData text="Buscar barbaros" icon="@images/Barbaros_config.png" keyboardShortcut="CTRL-O" />
+								</buttonData>
+							</Menu.Item>
 						</Menu.Section>
 						<Menu.Section>
 							<Menu.Item action="activarReloj">

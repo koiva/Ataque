@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context
 			http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
@@ -10,8 +9,7 @@
 	<context:component-scan base-package="org.fbgk.ataque.bbdd.impl" />
 
 	<!-- Declare a datasource that has pooling capabilities -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${app.jdbc.driverClassName}" />
 		<property name="url" value="${app.jdbc.url}" />
 		<property name="username" value="${app.jdbc.username}" />
@@ -19,10 +17,8 @@
 	</bean>
 
 	<!-- Declare a transaction manager -->
-	<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" 
-		p:sessionFactory-ref="sessionFactory" /> -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" p:sessionFactory-ref="sessionFactory" /> -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="hibernateProperties">
 			<props>
@@ -42,8 +38,7 @@
 		</property>
 	</bean>
 
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
@@ -51,15 +46,11 @@
 	<!-- NEGOCIO -->
 
 	<!-- Url -->
-	<bean id="clienteHTTPServicio" class="org.fbgk.ataque.url.impl.ClienteHTTPServicioImpl"
-		init-method="init">
-	</bean>
+	<bean id="clienteHTTPServicio" class="org.fbgk.ataque.url.impl.ClienteHTTPServicioImpl" init-method="init"/>
 
 
 	<!-- Transformaciones -->
-	<bean id="transformacionServicio"
-		class="org.fbgk.ataque.transformacion.impl.TransformacionServicioImpl"
-		depends-on="ataqueDao">
+	<bean id="transformacionServicio" class="org.fbgk.ataque.transformacion.impl.TransformacionServicioImpl" depends-on="ataqueDao">
 		<property name="clienteHTTPServicio" ref="clienteHTTPServicio" />
 		<property name="ataqueDao" ref="ataqueDao" />
 	</bean>
@@ -69,7 +60,7 @@
 		<property name="ataqueDao" ref="ataqueDao" />
 		<property name="utilVistaServicio" ref="utilVistaServicio" />
 	</bean>
-	
+
 	<bean id="gestionListaAtaquesServicio" class="org.fbgk.ataque.vistas.impl.GestionListaAtaquesServicioImpl">
 		<property name="ataqueDao" ref="ataqueDao" />
 		<property name="utilVistaServicio" ref="utilVistaServicio" />
@@ -79,14 +70,20 @@
 		<property name="ataqueDao" ref="ataqueDao" />
 		<property name="utilVistaServicio" ref="utilVistaServicio" />
 	</bean>
-	
+
 	<bean id="utilVistaServicio" class="org.fbgk.ataque.vistas.impl.UtilVistaServicioImpl" />
-	
+
 	<bean id="gestionAtaqueServicio" class="org.fbgk.ataque.vistas.impl.GestionAtaqueServicioImpl">
 		<property name="ataqueDao" ref="ataqueDao" />
 		<property name="utilVistaServicio" ref="utilVistaServicio" />
 	</bean>
- 
+
+	<bean id="distnaciaMaxServicio" class="org.fbgk.ataque.vistas.impl.GestionDistanciaMaxServicioImpl">
+		<property name="ataqueDao" ref="ataqueDao" />
+		<property name="utilVistaServicio" ref="utilVistaServicio" />
+		<property name="barbarosServicio" ref="barbarosServicio" />
+	</bean>
+
 	<!-- Acciones Vistas -->
 	<bean id="accionRelojAtaque" class="org.fbgk.ataque.vistas.actions.ActivarRelojAction">
 		<property name="atacadorAutomaticoServicio" ref="atacadorAutomaticoServicio" />
@@ -106,13 +103,12 @@
 		<property name="ataqueDao" ref="ataqueDao" />
 	</bean>
 
-	<bean id="atacadorAutomaticoServicio"
-		class="org.fbgk.ataque.actions.impl.AtacadorAutomaticoServicioImpl">
+	<bean id="atacadorAutomaticoServicio" class="org.fbgk.ataque.actions.impl.AtacadorAutomaticoServicioImpl">
 		<property name="urlActionsServicio" ref="urlActionsServicio" />
 		<property name="ataqueDao" ref="ataqueDao" />
 	</bean>
-	
-	
+
+
 
 
 

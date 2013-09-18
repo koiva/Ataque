@@ -11,39 +11,26 @@
 							<ListButton bxml:id="listaAtaqueID" />
 						</BoxPane>
 						<BoxPane Form.label="Usuario">
-							<TextInput bxml:id="usuario" enabled="false"/>
+							<TextInput bxml:id="usuario" enabled="false" />
 						</BoxPane>
 						<BoxPane Form.label="Poblado">
-							<TextInput bxml:id="poblado" enabled="false"/>
+							<TextInput bxml:id="poblado" enabled="false" />
+						</BoxPane>
+						<BoxPane Form.label="Distancia Máxima">
+							<TextInput bxml:id="distanciaTxt" />
 						</BoxPane>
 					</Form.Section>
 				</Form>
 			</Border>
 		</TablePane.Row>
-		<TablePane.Row height="1*">
-			<Border styles="{padding:6}">
-				<ScrollPane horizontalScrollBarPolicy="fill">
-					<TableView bxml:id="gestionTabla">
-						<columns>
-							<TableView.Column name="puntos" width="1*" headerData="Puntos" />
-							<TableView.Column name="x" width="1*" headerData="X" />
-							<TableView.Column name="y" width="1*" headerData="Y" />
-							<TableView.Column name="distancia" width="1*" headerData="Distancia" />
-							<TableView.Column name="fecha" width="1*" headerData="Fecha" />
-						</columns>
-					</TableView>
-					<columnHeader>
-						<TableViewHeader tableView="$gestionTabla" sortMode="single_column" />
-					</columnHeader>
-				</ScrollPane>
-			</Border>
-		</TablePane.Row>
 		<TablePane.Row height="-1">
 			<Border styles="{padding:6}">
 				<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
+					<PushButton bxml:id="buttonAceptar" buttonData="Aceptar" styles="{minimumAspectRatio:3}" />
 					<PushButton bxml:id="buttonSalir" buttonData="Salir" styles="{minimumAspectRatio:3}" />
 				</BoxPane>
 			</Border>
 		</TablePane.Row>
 	</TablePane>
 </Frame>
+		

@@ -1,10 +1,12 @@
 package org.fbgk.ataque.vistas.base;
 
 import org.apache.pivot.wtk.Application;
+import org.apache.pivot.wtk.Sheet;
 import org.apache.pivot.wtk.Window;
 import org.fbgk.ataque.actions.URLActionsServicio;
 import org.fbgk.ataque.transformacion.TransformacionServicio;
 import org.fbgk.ataque.vistas.GestionAtaquesServicio;
+import org.fbgk.ataque.vistas.GestionDistanciaMaxServicio;
 import org.fbgk.ataque.vistas.GestionListaAtaquesServicio;
 import org.fbgk.ataque.vistas.JugadoresServicio;
 import org.fbgk.ataque.vistas.ServidorServicio;
@@ -18,6 +20,9 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	/** The gestion ataques servicio. */
 	protected GestionAtaquesServicio		gestionAtaquesServicio;
 
+	/** The gestion distancia max servicio. */
+	protected GestionDistanciaMaxServicio	gestionDistanciaMaxServicio;
+
 	/** The gestion ataques servicio. */
 	protected GestionListaAtaquesServicio	gestionListaAtaquesServicio;
 
@@ -26,6 +31,9 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 
 	/** The servidor servicio. */
 	protected ServidorServicio				servidorServicio;
+
+	/** The sheet. */
+	protected Sheet							sheet;
 
 	/** The transformacion servicio. */
 	protected TransformacionServicio		transformacionServicio;
@@ -54,6 +62,16 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	 */
 	public void setGestionAtaquesServicio(final GestionAtaquesServicio gestionAtaquesServicio) {
 		this.gestionAtaquesServicio = gestionAtaquesServicio;
+	}
+
+	/**
+	 * Sets the gestion distancia max servicio.
+	 * 
+	 * @param gestionDistanciaMaxServicio
+	 *            the new gestion distancia max servicio
+	 */
+	public void setGestionDistanciaMaxServicio(final GestionDistanciaMaxServicio gestionDistanciaMaxServicio) {
+		this.gestionDistanciaMaxServicio = gestionDistanciaMaxServicio;
 	}
 
 	/**
