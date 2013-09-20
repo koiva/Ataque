@@ -49,19 +49,19 @@
 										<TextInput preferredWidth="60" text="0" bxml:id="lanceroTxt" textKey="lancero" />
 									</BoxPane>
 									<BoxPane Form.label="Espadas">
-										<ImageView image="@images/units/unit_sword.png" />
+										<ImageView image="@images/units/Unit_sword.png" />
 										<TextInput preferredWidth="60" text="0" bxml:id="espadasTxt" textKey="espadas" />
 									</BoxPane>
 									<BoxPane Form.label="Hachas">
-										<ImageView image="@images/units/unit_axe.png" />
+										<ImageView image="@images/units/Unit_axe.png" />
 										<TextInput preferredWidth="60" text="0" bxml:id="hachasTxt" textKey="hachas" />
 									</BoxPane>
 									<BoxPane Form.label="Arqueros">
-										<ImageView image="@images/units/unit_archer.png" />
+										<ImageView image="@images/units/Unit_archer.png" />
 										<TextInput preferredWidth="60" text="0" bxml:id="arquerosTxt" textKey="arquero" />
 									</BoxPane>
 									<BoxPane Form.label="Espías">
-										<ImageView image="@images/units/unit_spy.png" />
+										<ImageView image="@images/units/Unit_spy.png" />
 										<TextInput preferredWidth="60" text="0" bxml:id="espiasTxt" textKey="espias" />
 									</BoxPane>
 								</Border>
@@ -69,23 +69,23 @@
 							<TablePane.Row height="1*">
 								<Border styles="{padding:6}">
 									<BoxPane Form.label="Caballería ligera">
-										<ImageView image="@images/units/unit_light.png" />
+										<ImageView image="@images/units/Unit_light.png" />
 										<TextInput preferredWidth="60" text="0" bxml:id="ligerosTxt" textKey="ligeros" />
 									</BoxPane>
 									<BoxPane Form.label="Caballería pesada">
-										<ImageView image="@images/units/unit_heavy.png" />
+										<ImageView image="@images/units/Unit_heavy.png" />
 										<TextInput preferredWidth="60" text="0" bxml:id="pesadosTxt" textKey="pesados" />
 									</BoxPane>
 									<BoxPane Form.label="Caballería arquera">
-										<ImageView image="@images/units/unit_marcher.png" />
+										<ImageView image="@images/units/Unit_marcher.png" />
 										<TextInput preferredWidth="60" text="0" bxml:id="caballoArqueroTxt" textKey="caballoArquero" />
 									</BoxPane>
 									<BoxPane Form.label="Arietes">
-										<ImageView image="@images/units/unit_ram.png" />
+										<ImageView image="@images/units/Unit_ram.png" />
 										<TextInput preferredWidth="60" text="0" bxml:id="arieteTxt" textKey="ariete" />
 									</BoxPane>
 									<BoxPane Form.label="Catapulta">
-										<ImageView image="@images/units/unit_catapult.png" />
+										<ImageView image="@images/units/Unit_catapult.png" />
 										<TextInput preferredWidth="60" text="0" bxml:id="catapultaTxt" textKey="catapulta" />
 									</BoxPane>
 								</Border>
