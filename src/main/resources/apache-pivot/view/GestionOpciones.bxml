@@ -1,0 +1,41 @@
+<Frame title="Opciones" maximized="false" xmlns:bxml="http://pivot.apache.org/bxml" bxml:id="frameOpciones" xmlns="org.apache.pivot.wtk">
+	<TablePane>
+		<columns>
+			<TablePane.Column width="1*" />
+		</columns>
+		<TablePane.Row height="1*">
+			<Border styles="{padding:6}">
+				<Form bxml:id="formulario">
+					<Form.Section heading="Opciones">
+						<BoxPane Form.label="Tiempo para comprobar ataques(Min)">
+							<TextInput bxml:id="tiempoAtaque" />
+						</BoxPane>
+						<BoxPane Form.label="Comprobación de barbaros">
+							<Checkbox bxml:id="comprobacionBarbaro"  /> 
+						</BoxPane>
+						<BoxPane Form.label="Lector de informes">
+							<Checkbox bxml:id="comprobacionInformes"  /> 
+						</BoxPane>
+						<BoxPane Form.label="Eliminar los informes que sean de la lista de ataque">
+							<Checkbox bxml:id="eliminarInformeLista" /> 
+						</BoxPane>
+						<BoxPane Form.label="Atacar de nuevo si vuelve lleno">
+							<Checkbox bxml:id="atacarNuevoFull"  /> 
+						</BoxPane>
+						<BoxPane Form.label="Atacar de nuevo si lo espiado supera">
+							<TextInput bxml:id="atacarEspiado" />
+						</BoxPane>
+					</Form.Section>
+				</Form>
+			</Border>
+		</TablePane.Row>
+		<TablePane.Row height="-1">
+			<Border styles="{padding:6}">
+				<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
+					<PushButton bxml:id="buttonAceptar" buttonData="Aceptar" styles="{minimumAspectRatio:3}" />
+					<PushButton bxml:id="buttonSalir" buttonData="Salir" styles="{minimumAspectRatio:3}" />
+				</BoxPane>
+			</Border>
+		</TablePane.Row>
+	</TablePane>
+</Frame>

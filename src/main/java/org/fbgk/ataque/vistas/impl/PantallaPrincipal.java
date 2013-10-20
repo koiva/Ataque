@@ -18,6 +18,8 @@ import org.fbgk.ataque.transformacion.TransformacionServicio;
 import org.fbgk.ataque.vistas.GestionAtaquesServicio;
 import org.fbgk.ataque.vistas.GestionDistanciaMaxServicio;
 import org.fbgk.ataque.vistas.GestionListaAtaquesServicio;
+import org.fbgk.ataque.vistas.JugadoresServicio;
+import org.fbgk.ataque.vistas.OpcionesServicio;
 import org.fbgk.ataque.vistas.ServidorServicio;
 import org.fbgk.ataque.vistas.actions.ActivarRelojAction;
 import org.fbgk.ataque.vistas.base.PantallaPrincipalBase;
@@ -71,6 +73,7 @@ public class PantallaPrincipal extends PantallaPrincipalBase {
 		Action.getNamedActions().put("Opciones", new Action() {
 			@Override
 			public void perform(final Component source) {
+				PantallaPrincipal.this.opcionesServicio.open(PantallaPrincipal.this.flowPane.getDisplay(), PantallaPrincipal.this.flowPane.getWindow());
 			}
 		});
 		Action.getNamedActions().put("RestablecerBBDD", new Action() {
@@ -143,13 +146,14 @@ public class PantallaPrincipal extends PantallaPrincipalBase {
 		this.window = (Window) bxmlSerializer.readObject(this.getClass().getResource("/apache-pivot/view/AplicacionPrincipal.bxml"));
 		bxmlSerializer.bind(this);
 		display.add(this.window);
-		this.jugadoresServicio = Marshaller.context.getBean(JugadoresServicioImpl.class);
+		this.jugadoresServicio = Marshaller.context.getBean(JugadoresServicio.class);
 		this.transformacionServicio = Marshaller.context.getBean(TransformacionServicio.class);
 		this.urlActionsServicio = Marshaller.context.getBean(URLActionsServicio.class);
 		this.servidorServicio = Marshaller.context.getBean(ServidorServicio.class);
 		this.gestionListaAtaquesServicio = Marshaller.context.getBean(GestionListaAtaquesServicio.class);
 		this.gestionAtaquesServicio = Marshaller.context.getBean(GestionAtaquesServicio.class);
 		this.gestionDistanciaMaxServicio = Marshaller.context.getBean(GestionDistanciaMaxServicio.class);
+		this.opcionesServicio = Marshaller.context.getBean(OpcionesServicio.class);
 		this.open(display);
 	}
 }

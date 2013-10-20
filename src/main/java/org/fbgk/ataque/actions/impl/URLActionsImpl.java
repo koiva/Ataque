@@ -22,6 +22,7 @@ import org.fbgk.ataque.guerrastribales.dto.ServidorDTO;
 import org.fbgk.ataque.url.constantes.ConstantesURL;
 import org.fbgk.ataque.url.dto.EjecutarHTTPDTO;
 import org.fbgk.ataque.url.dto.RespuestaHTTPDTO;
+import org.fbgk.ataque.vistas.constantes.Configuracion;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -61,8 +62,8 @@ public class URLActionsImpl extends URLActionsBase {
 		final RespuestaHTTPDTO respuestaHTTPDTO2 = this.clienteHTTPServicio.ejecutarPost(new EjecutarHTTPDTO(url, this.mapeoAtaqueInput(respuestaHTTPDTO, ataqueDTO.getListaAtaquesDTO()), false, null, null, Boolean.TRUE));
 		final String documento = this.respuestaString(respuestaHTTPDTO2);
 		final Document document = Jsoup.parse(documento);
-		if (documento.indexOf("Usuario") == -1) {
-			logger.debug("Atacando al barbaro");
+		if (!ataqueDTO.getIndBarbaro() || (documento.indexOf("Usuario") == -1 && this.configuration.getBoolean(Configuracion.BARBAROS.getKey(), Boolean.TRUE))) {
+			logger.debug("Atacando al barbaro o al usuario");
 			final Elements elements = document.select("input");
 			final Map<String, String> mapeo = new HashMap<String, String>();
 			for (final Element element : elements) {
@@ -108,11 +109,6 @@ public class URLActionsImpl extends URLActionsBase {
 			}
 		}
 		return listaAtacados;
-	}
-
-	@Override
-	public List<AtaqueDTO> atacarListaBarbaroTodo(final ListaAtaquesDTO listaAtaquesID, final LoginDTO loginID) {
-		return null;
 	}
 
 	/*
@@ -363,7 +359,8 @@ public class URLActionsImpl extends URLActionsBase {
 	 *            the respuesta httpdto
 	 * @return the string
 	 */
-	private String respuestaString(final RespuestaHTTPDTO respuestaHTTPDTO) {
+	@Override
+	public String respuestaString(final RespuestaHTTPDTO respuestaHTTPDTO) {
 		logger.debug("Descodificando la respuesta");
 		final StringWriter writer = new StringWriter();
 		try {

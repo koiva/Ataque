@@ -29,22 +29,26 @@ public class AtaqueDTO implements Serializable, SetearSerializable {
 	@Id
 	private Integer				ataqueID;
 
+	/** The distancia max. */
+	@Column
+	private Double				distanciaMax;
+
 	/** The game id. */
 	@Column
 	private Integer				gameIDAtaque;
 
-	/** The tiempo ataque. */
+	/** The ind barbaro. */
 	@Column
-	private Calendar			tiempoAtaque;
-
-	/** The distancia max. */
-	@Column
-	private Double				distanciaMax;
+	private Boolean				indBarbaro;
 
 	/** The lista ataques dto. */
 	@ManyToOne
 	@JoinColumn(name = "listaAtaquesID")
 	private ListaAtaquesDTO		listaAtaquesDTO;
+
+	/** The tiempo ataque. */
+	@Column
+	private Calendar			tiempoAtaque;
 
 	/*
 	 * (non-Javadoc)
@@ -129,6 +133,15 @@ public class AtaqueDTO implements Serializable, SetearSerializable {
 	}
 
 	/**
+	 * Gets the ind barbaro.
+	 * 
+	 * @return the ind barbaro
+	 */
+	public Boolean getIndBarbaro() {
+		return this.indBarbaro;
+	}
+
+	/**
 	 * Gets the lista ataques dto.
 	 * 
 	 * @return the lista ataques dto
@@ -199,8 +212,19 @@ public class AtaqueDTO implements Serializable, SetearSerializable {
 	 * @see
 	 * org.fbgk.ataque.bbdd.interfaz.SetearSerializable#setId(java.lang.Integer)
 	 */
+	@Override
 	public void setId(final Integer id) {
 		this.ataqueID = id;
+	}
+
+	/**
+	 * Sets the ind barbaro.
+	 * 
+	 * @param indBarbaro
+	 *            the new ind barbaro
+	 */
+	public void setIndBarbaro(final Boolean indBarbaro) {
+		this.indBarbaro = indBarbaro;
 	}
 
 	/**

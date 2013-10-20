@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.fbgk.ataque.guerrastribales.dto.AtaqueDTO;
-import org.fbgk.ataque.guerrastribales.dto.ListaAtaquesDTO;
-import org.fbgk.ataque.guerrastribales.dto.LoginDTO;
+import org.fbgk.ataque.url.dto.RespuestaHTTPDTO;
 
 /**
  * The Interface URLActions.
@@ -21,8 +20,6 @@ public interface URLActionsServicio {
 	 * @return the boolean
 	 */
 	public List<AtaqueDTO> atacarListaBarbaroTodo(final Integer listaAtaquesID, final Integer loginID);
-
-	public List<AtaqueDTO> atacarListaBarbaroTodo(final ListaAtaquesDTO listaAtaquesID, final LoginDTO loginID);
 
 	/**
 	 * Atacar siguiente barbaro. Ataque al siguiente lista de ataques siempre
@@ -80,5 +77,7 @@ public interface URLActionsServicio {
 	 * @return the boolean
 	 */
 	public Boolean loginSiNoLoEsta(final Integer loginID, final Integer serverID);
+
+	String respuestaString(RespuestaHTTPDTO respuestaHTTPDTO);
 
 }

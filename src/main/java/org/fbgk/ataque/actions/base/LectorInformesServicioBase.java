@@ -1,27 +1,27 @@
 package org.fbgk.ataque.actions.base;
 
 import org.apache.commons.configuration.Configuration;
-import org.fbgk.ataque.actions.MapeoGuerrasTribalesServicio;
+import org.fbgk.ataque.actions.LectorInformesServicio;
 import org.fbgk.ataque.actions.URLActionsServicio;
 import org.fbgk.ataque.bbdd.AtaqueDao;
 import org.fbgk.ataque.url.ClienteHTTPServicio;
 
 /**
- * The Class URLActionsBase.
+ * The Class LectorInformesServicioBase.
  */
-public abstract class URLActionsBase implements URLActionsServicio {
+public abstract class LectorInformesServicioBase implements LectorInformesServicio {
 
 	/** The ataque dao. */
-	protected AtaqueDao						ataqueDao;
+	protected AtaqueDao				ataqueDao;
 
 	/** The cliente http servicio. */
-	protected ClienteHTTPServicio			clienteHTTPServicio;
+	protected ClienteHTTPServicio	clienteHTTPServicio;
 
 	/** The configuration. */
-	protected Configuration					configuration;
+	protected Configuration			configuration;
 
-	/** The mapeo guerras tribales. */
-	protected MapeoGuerrasTribalesServicio	mapeoGuerrasTribales;
+	/** The url actions servicio. */
+	protected URLActionsServicio	urlActionsServicio;
 
 	/**
 	 * Sets the ataque dao.
@@ -54,13 +54,13 @@ public abstract class URLActionsBase implements URLActionsServicio {
 	}
 
 	/**
-	 * Sets the mapeo guerras tribales.
+	 * Sets the url actions servicio.
 	 * 
-	 * @param mapeoGuerrasTribales
-	 *            the new mapeo guerras tribales
+	 * @param urlActionsServicio
+	 *            the new url actions servicio
 	 */
-	public void setMapeoGuerrasTribales(final MapeoGuerrasTribalesServicio mapeoGuerrasTribales) {
-		this.mapeoGuerrasTribales = mapeoGuerrasTribales;
+	public void setUrlActionsServicio(final URLActionsServicio urlActionsServicio) {
+		this.urlActionsServicio = urlActionsServicio;
 	}
 
 }

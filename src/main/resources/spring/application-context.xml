@@ -47,7 +47,7 @@
 
 	<!-- Url -->
 	<bean id="clienteHTTPServicio" class="org.fbgk.ataque.url.impl.ClienteHTTPServicioImpl" init-method="init"/>
-
+	
 
 	<!-- Transformaciones -->
 	<bean id="transformacionServicio" class="org.fbgk.ataque.transformacion.impl.TransformacionServicioImpl" depends-on="ataqueDao">
@@ -78,14 +78,20 @@
 		<property name="utilVistaServicio" ref="utilVistaServicio" />
 	</bean>
 
-	<bean id="distnaciaMaxServicio" class="org.fbgk.ataque.vistas.impl.GestionDistanciaMaxServicioImpl">
+	<bean id="distanciaMaxServicio" class="org.fbgk.ataque.vistas.impl.GestionDistanciaMaxServicioImpl">
 		<property name="ataqueDao" ref="ataqueDao" />
 		<property name="utilVistaServicio" ref="utilVistaServicio" />
 		<property name="barbarosServicio" ref="barbarosServicio" />
 	</bean>
-
+	
+	<bean id="opcionesServicio" class="org.fbgk.ataque.vistas.impl.OpcionesServicioImpl">
+		<property name="utilVistaServicio" ref="utilVistaServicio" />
+		<property name="configuration" ref="configurationApache" />
+	</bean>
+	
 	<!-- Acciones Vistas -->
 	<bean id="accionRelojAtaque" class="org.fbgk.ataque.vistas.actions.ActivarRelojAction">
+		<property name="configuration" ref="configurationApache" />
 		<property name="atacadorAutomaticoServicio" ref="atacadorAutomaticoServicio" />
 	</bean>
 
@@ -95,6 +101,7 @@
 		<property name="ataqueDao" ref="ataqueDao" />
 		<property name="clienteHTTPServicio" ref="clienteHTTPServicio" />
 		<property name="mapeoGuerrasTribales" ref="mapeoGuerrasTribales" />
+		<property name="configuration" ref="configurationApache" />
 	</bean>
 
 	<bean id="mapeoGuerrasTribales" class="org.fbgk.ataque.actions.impl.MapeoGuerrasTribalesImpl" />
@@ -106,10 +113,18 @@
 	<bean id="atacadorAutomaticoServicio" class="org.fbgk.ataque.actions.impl.AtacadorAutomaticoServicioImpl">
 		<property name="urlActionsServicio" ref="urlActionsServicio" />
 		<property name="ataqueDao" ref="ataqueDao" />
+		<property name="lectorInformesServicio" ref="lectorInformesServicio" />
 	</bean>
-
-
-
-
+	
+	<bean id="lectorInformesServicio" class="org.fbgk.ataque.actions.impl.LectorInformesServicioImpl">
+		<property name="ataqueDao" ref="ataqueDao" />
+		<property name="clienteHTTPServicio" ref="clienteHTTPServicio" />
+		<property name="configuration" ref="configurationApache" />
+		<property name="urlActionsServicio" ref="urlActionsServicio" />
+	</bean>
+	
+	<bean id="configurationApache" class="org.apache.commons.configuration.PropertiesConfiguration">
+		<constructor-arg type="java.lang.String" value="config/configuracion.properties" />
+	</bean>
 
 </beans>

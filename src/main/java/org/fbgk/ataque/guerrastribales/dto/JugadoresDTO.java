@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -26,29 +27,29 @@ public class JugadoresDTO implements Serializable, RecuperarGameID, SetearSerial
 	/** The Constant serialVersionUID. */
 	private static final long	serialVersionUID	= 35487285450852554L;
 
+	/** The alianza id. */
+	@ManyToOne
+	@JoinColumn(name = "alianzaID")
+	private AlianzaDTO			alianzaDTO;
+
+	/** The game id. */
+	@Column
+	private Integer				gameID;
+
 	/** The id. */
 	@Id
 	@GeneratedValue
 	@Column
 	private Integer				jugadoresID;
 
-	/** The game id. */
-	@Column
-	private Integer				gameID;
-
-	/** The servidor dto. */
-	@ManyToOne
-	@JoinColumn(name = "servidorID")
-	private ServidorDTO			servidorDTO;
+	/** The lista pueblos dto. */
+	@OneToMany(fetch = FetchType.EAGER)
+	@Column(name = "pueblosID")
+	private List<PueblosDTO>	listaPueblosDTO;
 
 	/** The nombre. */
 	@Column
 	private String				nombre;
-
-	/** The alianza id. */
-	@ManyToOne
-	@JoinColumn(name = "alianzaID")
-	private AlianzaDTO			alianzaDTO;
 
 	/** The numero pueblos. */
 	@Column
@@ -62,10 +63,10 @@ public class JugadoresDTO implements Serializable, RecuperarGameID, SetearSerial
 	@Column
 	private Integer				ranking;
 
-	/** The lista pueblos dto. */
-	@OneToMany
-	@Column(name = "pueblosID")
-	private List<PueblosDTO>	listaPueblosDTO;
+	/** The servidor dto. */
+	@ManyToOne
+	@JoinColumn(name = "servidorID")
+	private ServidorDTO			servidorDTO;
 
 	/*
 	 * (non-Javadoc)
@@ -164,6 +165,7 @@ public class JugadoresDTO implements Serializable, RecuperarGameID, SetearSerial
 	 * 
 	 * @see org.fbgk.ataque.bbdd.RecuperarGameID#getGameID()
 	 */
+	@Override
 	public Integer getGameID() {
 		return this.gameID;
 	}
@@ -227,6 +229,7 @@ public class JugadoresDTO implements Serializable, RecuperarGameID, SetearSerial
 	 * 
 	 * @see org.fbgk.ataque.bbdd.RecuperarGameID#getServidorDTO()
 	 */
+	@Override
 	public ServidorDTO getServidorDTO() {
 		return this.servidorDTO;
 	}
@@ -278,6 +281,7 @@ public class JugadoresDTO implements Serializable, RecuperarGameID, SetearSerial
 	 * @see
 	 * org.fbgk.ataque.bbdd.interfaz.SetearSerializable#setId(java.lang.Integer)
 	 */
+	@Override
 	public void setId(final Integer id) {
 		this.jugadoresID = id;
 	}

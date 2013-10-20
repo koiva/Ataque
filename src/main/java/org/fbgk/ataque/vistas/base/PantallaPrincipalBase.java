@@ -9,6 +9,7 @@ import org.fbgk.ataque.vistas.GestionAtaquesServicio;
 import org.fbgk.ataque.vistas.GestionDistanciaMaxServicio;
 import org.fbgk.ataque.vistas.GestionListaAtaquesServicio;
 import org.fbgk.ataque.vistas.JugadoresServicio;
+import org.fbgk.ataque.vistas.OpcionesServicio;
 import org.fbgk.ataque.vistas.ServidorServicio;
 import org.fbgk.ataque.vistas.impl.JugadoresServicioImpl;
 
@@ -28,6 +29,9 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 
 	/** The jugadores servicio. */
 	protected JugadoresServicio				jugadoresServicio;
+
+	/** The opciones servicio. */
+	protected OpcionesServicio				opcionesServicio;
 
 	/** The servidor servicio. */
 	protected ServidorServicio				servidorServicio;
@@ -102,6 +106,16 @@ public abstract class PantallaPrincipalBase extends Window implements Applicatio
 	 */
 	public void setJugadoresServicio(final JugadoresServicioImpl jugadoresServicio) {
 		this.jugadoresServicio = jugadoresServicio;
+	}
+
+	/**
+	 * Sets the opciones servicio.
+	 * 
+	 * @param opcionesServicio
+	 *            the new opciones servicio
+	 */
+	public void setOpcionesServicio(final OpcionesServicio opcionesServicio) {
+		this.opcionesServicio = opcionesServicio;
 	}
 
 	/**

@@ -31,13 +31,15 @@ public class AtacadorAutomaticoServicioImpl extends AtacadorAutomaticoServicioBa
 			final LoginDTO loginDTO = this.ataqueDao.consultar("FROM LoginDTO WHERE usuario=?", (Object) pueblosDTO.getJugadoresDTO().getNombre());
 			if (loginDTO != null) {
 				logger.debug("Encontrado el Login. Empieza el Ataque.");
+				this.lectorInformesServicio.leerInformes(loginDTO, listaAtaquesDTO.getServidorDTO());
 				this.urlActionsServicio.atacarListaBarbaroTodo(listaAtaquesDTO.getListaAtaquesID(), loginDTO.getLoginID());
 			}
 		}
 	}
 
+	@Override
 	public void atacarTodasListas() {
-		final List<ListaAtaquesDTO> listaAtaques = this.ataqueDao.recuperarTodo(new ListaAtaquesDTO());
+		final List<ListaAtaquesDTO> listaAtaques = this.ataqueDao.buscar("FROM ListaAtaquesDTO WHERE isActivo is true order by servidorDTO asc");
 		for (final ListaAtaquesDTO listaAtaquesDTO : listaAtaques) {
 			if (listaAtaquesDTO.getIsActivo()) {
 				logger.debug("Empieza el ataque con la lista: {}", listaAtaquesDTO.getNombre());

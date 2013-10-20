@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.fbgk.ataque</groupId>
@@ -11,7 +10,9 @@
 	<developers>
 		<developer>
 			<name>Francisco Benítez García</name>
-			<roles><role>Developer</role></roles>
+			<roles>
+				<role>Developer</role>
+			</roles>
 		</developer>
 	</developers>
 
@@ -29,6 +30,7 @@
 		<apache.codec.version>1.8</apache.codec.version>
 		<jsoup.version>1.7.2</jsoup.version>
 		<version.qos>1.0.13</version.qos>
+		<version.commons.configuration>1.9</version.commons.configuration>
 	</properties>
 
 	<build>
@@ -150,15 +152,22 @@
 			<version>${version.qos}</version>
 		</dependency>
 		<dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${version.qos}</version>
-        </dependency>
-		<!-- -->
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${version.qos}</version>
+		</dependency>
+		<!-- HTTP APACHE -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>${apache.httpclient.version}</version>
+		</dependency>
+	
+		<!-- Commons Configuration -->
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>${version.commons.configuration}</version>
 		</dependency>
 
 		<!-- Commons Codec -->

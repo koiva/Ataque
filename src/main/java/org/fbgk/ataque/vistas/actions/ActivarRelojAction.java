@@ -3,11 +3,13 @@ package org.fbgk.ataque.vistas.actions;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.pivot.wtk.Action;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Menu.Item;
 import org.apache.pivot.wtk.content.MenuItemData;
 import org.fbgk.ataque.actions.AtacadorAutomaticoServicio;
+import org.fbgk.ataque.vistas.constantes.Configuracion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,9 @@ public class ActivarRelojAction extends Action {
 
 	/** The atacador automatico servicio. */
 	private AtacadorAutomaticoServicio	atacadorAutomaticoServicio;
+
+	/** The configuration. */
+	private Configuration				configuration;
 
 	/** The timer. */
 	private Timer						timer;
@@ -45,7 +50,7 @@ public class ActivarRelojAction extends Action {
 						logger.error("Encontrado un error en el timer.", ex);
 					}
 				}
-			}, 0, 300000);
+			}, 0, this.configuration.getLong(Configuracion.TIEMPOATAQUE.getKey(), 5) * 60000);
 			dataMenu.setText("Parar el atacador");
 		} else {
 			logger.debug("Parando los ataques automaticos");
@@ -63,6 +68,16 @@ public class ActivarRelojAction extends Action {
 	 */
 	public void setAtacadorAutomaticoServicio(final AtacadorAutomaticoServicio atacadorAutomaticoServicio) {
 		this.atacadorAutomaticoServicio = atacadorAutomaticoServicio;
+	}
+
+	/**
+	 * Sets the configuration.
+	 * 
+	 * @param configuration
+	 *            the new configuration
+	 */
+	public void setConfiguration(final Configuration configuration) {
+		this.configuration = configuration;
 	}
 
 }

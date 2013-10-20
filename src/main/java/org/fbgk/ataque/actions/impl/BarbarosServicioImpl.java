@@ -41,6 +41,7 @@ public class BarbarosServicioImpl extends BarbarosServicioBase {
 				final AtaqueDTO ataqueDTO = new AtaqueDTO();
 				ataqueDTO.setDistanciaMax(distanciaEntre);
 				ataqueDTO.setGameIDAtaque(pobladoSec.getGameID());
+				ataqueDTO.setIndBarbaro(Boolean.TRUE);
 				listAtaquesDTO.add(ataqueDTO);
 			}
 		}
@@ -60,7 +61,7 @@ public class BarbarosServicioImpl extends BarbarosServicioBase {
 		logger.debug("Mantenimiento de los barbaros invocado");
 		final List<AtaqueDTO> listaAtaques = this.buscarBarbaros(pueblosDTO, distMax);
 		logger.debug("Se esta procesando el numero de bárbaros segun la distancia máxima y si ha sido conquistado");
-		final List<AtaqueDTO> listaAtaquesAntiguo = this.ataqueDao.buscar("FROM AtaqueDTO WHERE listaAtaquesID=?", listaAtaquesDTO.getListaAtaquesID());
+		final List<AtaqueDTO> listaAtaquesAntiguo = this.ataqueDao.buscar("FROM AtaqueDTO WHERE listaAtaquesID=? AND indBarbaro = ?", listaAtaquesDTO.getListaAtaquesID(), Boolean.TRUE);
 		for (final AtaqueDTO ataqueDTO : listaAtaquesAntiguo) {
 			this.ataqueDao.eliminar(ataqueDTO);
 		}
