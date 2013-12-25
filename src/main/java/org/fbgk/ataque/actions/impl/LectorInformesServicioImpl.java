@@ -113,24 +113,30 @@ public class LectorInformesServicioImpl extends LectorInformesServicioBase {
 					final RespuestaHTTPDTO respuestaHTTPDTO = this.clienteHTTPServicio.ejecutarGet(ejecutarHTTPDTO);
 					final Document document = Jsoup.parse(this.urlActionsServicio.respuestaString(respuestaHTTPDTO));
 
-					final String idAtaque = document.select("#attack_info_att > tbody > tr > td > span").get(0).attr("data-id");
-					final String idDefensa = document.select("#attack_info_def > tbody > tr > td > span").get(0).attr("data-id");
+					final Elements elementsAtack = document.select("#attack_info_att > tbody > tr > td > span");
+					final Elements elementsDefen = document.select("#attack_info_def > tbody > tr > td > span");
 
-					final Boolean procesar = this.procesarBotin(document);
+					if (!elementsAtack.isEmpty() && !elementsDefen.isEmpty()) {
 
-					final ListaAtaquesDTO listaAtaquesDTO = this.ataqueDao.consultar("FROM ListaAtaquesDTO WHERE gameIDPropio = ? AND servidorID = ?", Integer.valueOf(idAtaque), idServer);
+						final String idAtaque = elementsAtack.get(0).attr("data-id");
+						final String idDefensa = elementsDefen.get(0).attr("data-id");
 
-					if (listaAtaquesDTO != null) {
+						final Boolean procesar = this.procesarBotin(document);
 
-						final AtaqueDTO ataqueDTO = this.ataqueDao.consultar("FROM AtaqueDTO WHERE listaAtaquesID = ? AND gameIDAtaque = ?", listaAtaquesDTO.getListaAtaquesID(), Integer.valueOf(idDefensa));
+						final ListaAtaquesDTO listaAtaquesDTO = this.ataqueDao.consultar("FROM ListaAtaquesDTO WHERE gameIDPropio = ? AND servidorID = ?", Integer.valueOf(idAtaque), idServer);
 
-						if (ataqueDTO != null) {
-							if (procesar) {
-								ataqueDTO.setTiempoAtaque(null);
-								this.ataqueDao.actualizar(ataqueDTO);
-							}
-							if (this.configuration.getBoolean(Configuracion.ELIMINARINFORMELISTA.getKey(), Boolean.TRUE)) {
-								this.clienteHTTPServicio.ejecutarGet(new EjecutarHTTPDTO(String.format("%s%s", inicioURL, document.select("a[href*=del_one]").get(0).attr("href")), null, Boolean.FALSE, null, null, Boolean.TRUE));
+						if (listaAtaquesDTO != null) {
+
+							final AtaqueDTO ataqueDTO = this.ataqueDao.consultar("FROM AtaqueDTO WHERE listaAtaquesID = ? AND gameIDAtaque = ?", listaAtaquesDTO.getListaAtaquesID(), Integer.valueOf(idDefensa));
+
+							if (ataqueDTO != null) {
+								if (procesar) {
+									ataqueDTO.setTiempoAtaque(null);
+									this.ataqueDao.actualizar(ataqueDTO);
+								}
+								if (this.configuration.getBoolean(Configuracion.ELIMINARINFORMELISTA.getKey(), Boolean.TRUE)) {
+									this.clienteHTTPServicio.ejecutarGet(new EjecutarHTTPDTO(String.format("%s%s", inicioURL, document.select("a[href*=del_one]").get(0).attr("href")), null, Boolean.FALSE, null, null, Boolean.TRUE));
+								}
 							}
 						}
 					}
