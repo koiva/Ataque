@@ -17,24 +17,16 @@ import org.fbgk.ataque.url.ClienteHTTPServicio;
  */
 public abstract class TransformacionServicioBase implements TransformacionServicio {
 
-	/** The mapeo alianza. */
-	protected final Map<Integer, AlianzaDTO>	mapeoAlianza						= new HashMap<Integer, AlianzaDTO>();
-
-	/** The mapeo jugadores. */
-	protected final Map<Integer, JugadoresDTO>	mapeoJugadores						= new HashMap<Integer, JugadoresDTO>();
-
-	/** The mapeo pueblos. */
-	protected final Map<Integer, PueblosDTO>	mapeoPueblos						= new HashMap<Integer, PueblosDTO>();
+	/** The ataque dao. */
+	private AtaqueDao							ataqueDao;
 
 	/** The cliente http servicio. */
 	private ClienteHTTPServicio					clienteHTTPServicio;
 
-	/** The ataque dao. */
-	private AtaqueDao							ataqueDao;
-
 	/** The insertar infomacion mapeo alianza. */
 	protected InsertarInfomacionMapeo			insertarInfomacionMapeoAlianza		= new InsertarInfomacionMapeo() {
 
+																						@Override
 																						public void insertarMapeo(final String[] valores, final ServidorDTO servidorDTO) {
 																							final AlianzaDTO alianzaDTO = new AlianzaDTO();
 																							alianzaDTO.setGameID(Integer.valueOf(valores[0]));
@@ -53,6 +45,7 @@ public abstract class TransformacionServicioBase implements TransformacionServic
 	/** The insertar infomacion mapeo jugadores. */
 	protected InsertarInfomacionMapeo			insertarInfomacionMapeoJugadores	= new InsertarInfomacionMapeo() {
 
+																						@Override
 																						public void insertarMapeo(final String[] valores, final ServidorDTO servidorDTO) {
 																							final JugadoresDTO jugadoresDTO = new JugadoresDTO();
 																							jugadoresDTO.setGameID(Integer.valueOf(valores[0]));
@@ -72,6 +65,7 @@ public abstract class TransformacionServicioBase implements TransformacionServic
 	/** The insertar infomacion mapeo poblados. */
 	protected InsertarInfomacionMapeo			insertarInfomacionMapeoPoblados		= new InsertarInfomacionMapeo() {
 
+																						@Override
 																						public void insertarMapeo(final String[] valores, final ServidorDTO servidorDTO) {
 																							final PueblosDTO pueblosDTO = new PueblosDTO();
 																							pueblosDTO.setGameID(Integer.valueOf(valores[0]));
@@ -85,9 +79,22 @@ public abstract class TransformacionServicioBase implements TransformacionServic
 																							pueblosDTO.setServidorDTO(servidorDTO);
 																							pueblosDTO.setPoints(Integer.valueOf(valores[5]));
 																							pueblosDTO.setRank(Integer.valueOf(valores[6]));
-																							TransformacionServicioBase.this.insertar(pueblosDTO);
+
+																							if (jugador != 0 || !pueblosDTO.getName().contains("Mercader")) {
+
+																								TransformacionServicioBase.this.insertar(pueblosDTO);
+																							}
 																						}
 																					};
+
+	/** The mapeo alianza. */
+	protected final Map<Integer, AlianzaDTO>	mapeoAlianza						= new HashMap<Integer, AlianzaDTO>();
+
+	/** The mapeo jugadores. */
+	protected final Map<Integer, JugadoresDTO>	mapeoJugadores						= new HashMap<Integer, JugadoresDTO>();
+
+	/** The mapeo pueblos. */
+	protected final Map<Integer, PueblosDTO>	mapeoPueblos						= new HashMap<Integer, PueblosDTO>();
 
 	/**
 	 * Gets the ataque dao.
