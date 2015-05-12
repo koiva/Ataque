@@ -1,7 +1,6 @@
 org.fbgk.ataque.core
 ====================
 
-Proyecto con integracion entre Spring + Hibernate + Apache Pivot para hacer pruebas con estos Frameworks
+Integration project between Spring + Hibernate + Apache Pivot to test these Frameworks
 
-El proyecto crea una BBDD en HSQLDB que a partir de la información establecida en los servidores de GuerrasTribales crea todos los poblados en la BBDD.
-Con ello hace ataques automáticos desde una cuenta válida, automatizando los datos segun la necesidad.
+The project creates a DB in HSQLDB (should be fast-forwarded to mysql) that from the information provided in TribalWars servers creates all the villages in the DB. This makes automated attacks from a valid account, automating the data as needed.
