@@ -1,4 +1,4 @@
-org.fbgk.ataque.core
+Ataque
 ====================
 
 Integration project between Spring + Hibernate + Apache Pivot to test these Frameworks
